@@ -1,9 +1,9 @@
-# Database Project Setup
+# Backend Project Setup
 
 ## Prerequisites
 
-- PostgreSQL
-- Bun
+- **PostgreSQL**: Ensure you have PostgreSQL installed and running.
+- **Bun**: Install Bun from [bun.sh](https://bun.sh/).
 
 ## Installation
 
@@ -27,26 +27,24 @@ Edit the `.env` file and update the `DB_URL` variable with your PostgreSQL conne
 DB_URL=your_database_url_here
 ```
 
-## Database Creation
+## Database Setup
 
-Before running migrations or generating artifacts, create the database:
+### Create the Database
+
+Create the database in PostgreSQL before running migrations or generating artifacts:
 
 ```sql
 CREATE DATABASE food_truck_mapper;
 ```
 
-Execute the above command in `psql`.
-
-## Commands
-
-Utilize the following scripts defined in `package.json` for database operations:
+Execute the above command in psql or any PostgreSQL client.
 
 ### Generate Artifacts
 
 Generate necessary ORM artifacts:
 
 ```bash
-bun run generate
+bun generate
 ```
 
 ### Migrate Database
@@ -54,7 +52,7 @@ bun run generate
 Apply database migrations:
 
 ```bash
-bun run migrate
+bun migrate
 ```
 
 ### Seed Database
@@ -62,7 +60,7 @@ bun run migrate
 Populate your database with initial data:
 
 ```bash
-bun run seed
+bun seed
 ```
 
 ### Launch Drizzle-kit Studio
@@ -70,5 +68,15 @@ bun run seed
 Start Drizzle-kit Studio for database management:
 
 ```bash
-bun run studio
+bun studio
+```
+
+## Development
+
+### Launch Bun HTTP Server
+
+Start the Bun HTTP server:
+
+```bash
+bun server
 ```
