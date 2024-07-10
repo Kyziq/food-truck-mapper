@@ -6,7 +6,8 @@
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate",
     "studio": "drizzle-kit studio --verbose",
-    "seed": "bun src/seed.ts"
+    "seed": "bun src/seed.ts",
+    "server": "bun src/server.ts"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
@@ -16,9 +17,7 @@
   "devDependencies": {
     "@types/bun": "latest",
     "@types/pg": "^8.11.6",
-    "drizzle-kit": "^0.22.8"
-  },
-  "peerDependencies": {
+    "drizzle-kit": "^0.22.8",
     "typescript": "^5.5.3"
   }
 }
