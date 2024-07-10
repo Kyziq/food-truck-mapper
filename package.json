@@ -1,11 +1,10 @@
 {
   "name": "food-truck-mapper",
-  "private": true,
+  "version": "1.0.0",
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "lint": "turbo lint"
   },
   "devDependencies": {
     "prettier": "^3.3.2",
