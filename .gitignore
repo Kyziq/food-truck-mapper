@@ -12,3 +12,6 @@ bun.lockb
 
 # Turbo repo cache
 .turbo/
+
+# Turborepo
+.turbo
