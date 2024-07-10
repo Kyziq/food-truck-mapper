@@ -78,5 +78,5 @@ bun studio
 Start the Bun HTTP server:
 
 ```bash
-bun server
+bun dev
 ```
