@@ -43,17 +43,31 @@ Utilize the following scripts defined in `package.json` for database operations:
 
 ### Generate Artifacts
 
+Generate necessary ORM artifacts:
+
 ```bash
 bun run generate
 ```
 
 ### Migrate Database
 
+Apply database migrations:
+
 ```bash
 bun run migrate
 ```
 
+### Seed Database
+
+Populate your database with initial data:
+
+```bash
+bun run seed
+```
+
 ### Launch Drizzle-kit Studio
+
+Start Drizzle-kit Studio for database management:
 
 ```bash
 bun run studio
