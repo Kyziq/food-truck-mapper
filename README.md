@@ -1,6 +1,6 @@
 # Food Truck Mapper
 
-Welcome to the Food Truck Mapper project, a comprehensive solution for mapping food trucks using a Flutter-based frontend, a Bun-powered backend, and a PostgreSQL database managed with DrizzleORM. This project leverages Bun for an efficient JavaScript runtime and package management.
+Welcome to the Food Truck Mapper project, a comprehensive solution for mapping food trucks using a Flutter-based frontend, a Bun-powered backend, and a PostgreSQL database managed with DrizzleORM. This project leverages Bun for an efficient JavaScript runtime and package management and uses TurboRepo for efficient project management.
 
 ## Quick Start
 
@@ -24,13 +24,11 @@ Welcome to the Food Truck Mapper project, a comprehensive solution for mapping f
 
 4. **Run the development environment:**
 
-   To start the development environment for both frontend and backend, navigate to the project root and run:
+   To start the development environment for both mobile and backend, navigate to the project root and run:
 
    ```sh
    bun dev
    ```
-
-   This command uses Turborepo to run the dev scripts in both the frontend and backend workspaces.
 
 ## Project Structure
 
@@ -48,4 +46,4 @@ bunx turbo link
 
 ## License
 
-This project is licensed under the MIT License
+This project is licensed under the MIT License.
