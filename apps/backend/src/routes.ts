@@ -102,24 +102,36 @@ export async function getFoodTruckById(id: number) {
   }
 }
 
-// Get all menu items for a specific food truck
-export async function getMenuItemById(id: number) {
+// Fetch all menu items for every food truck
+export async function getAllMenuItems() {
   try {
-    const result = await db
-      .select()
-      .from(menu_items)
-      .where(eq(menu_items.id, id))
-      .execute();
-    if (result.length === 0) {
-      return new Response("Menu item not found", { status: 404 });
-    }
-    return new Response(JSON.stringify(result[0], null, 2), {
+    const menuItems = await db.select().from(menu_items).execute();
+    return new Response(JSON.stringify(menuItems, null, 2), {
       headers: {
         "Content-Type": "application/json",
       },
     });
   } catch (error) {
-    console.error("Error fetching menu item:", error);
+    console.error("Error fetching menu items:", error);
+    return new Response("Internal Server Error", { status: 500 });
+  }
+}
+
+// Get all menu items for a specific food truck
+export async function getAllMenuItemsByFoodTruckId(foodTruckId: number) {
+  try {
+    const menuItems = await db
+      .select()
+      .from(menu_items)
+      .where(eq(menu_items.food_truck_id, foodTruckId))
+      .execute();
+    return new Response(JSON.stringify(menuItems, null, 2), {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching menu items:", error);
     return new Response("Internal Server Error", { status: 500 });
   }
 }

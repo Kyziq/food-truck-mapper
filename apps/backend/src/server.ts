@@ -5,75 +5,94 @@ import {
   updateFoodTruck,
   deleteFoodTruck,
   createMenuItem,
-  getMenuItemById,
+  getAllMenuItems,
+  getAllMenuItemsByFoodTruckId,
   updateMenuItem,
   deleteMenuItem,
 } from "./routes";
 
-// Define constants for path segments
-const FOODTRUCKS_PATH = "/foodtrucks";
-const MENUITEMS_PATH = "/menuitems";
+// Function to extract the ID from the URL path
+function extractId(path: string, basePath: string): number | null {
+  const basePathWithSlash = `/${basePath}/`;
+  if (path.startsWith(basePathWithSlash)) {
+    const idPart = path.slice(basePathWithSlash.length).split("/")[0];
+    const id = parseInt(idPart, 10);
+    return isNaN(id) ? null : id;
+  }
+  return null;
+}
 
 // Function to handle incoming HTTP requests
 async function handleRequest(req: Request): Promise<Response> {
   const url = new URL(req.url);
   const { pathname } = url;
 
+  console.log(`Handling request for ${pathname} with method ${req.method}`);
+
   // Food Truck Routes
-  if (pathname === FOODTRUCKS_PATH && req.method === "GET") {
-    // Get all food trucks
-    return getFoodTrucks();
+  if (req.method === "GET") {
+    if (pathname === "/foodtrucks") {
+      // Get all food trucks
+      return getFoodTrucks();
+    }
+
+    const foodTruckId = extractId(pathname, "foodtrucks");
+    if (foodTruckId !== null) {
+      if (pathname === `/foodtrucks/${foodTruckId}`) {
+        // Get a specific food truck by ID
+        return getFoodTruckById(foodTruckId);
+      } else if (pathname === `/foodtrucks/${foodTruckId}/menuitems`) {
+        // Get all menu items for a specific food truck
+        return getAllMenuItemsByFoodTruckId(foodTruckId);
+      }
+    }
+
+    if (pathname === "/menuitems") {
+      // Get all menu items for every food truck
+      return getAllMenuItems();
+    }
   }
 
-  if (pathname.startsWith(`${FOODTRUCKS_PATH}/`) && req.method === "GET") {
-    // Get a specific food truck by ID
-    const id = parseInt(pathname.substring(FOODTRUCKS_PATH.length + 1), 10);
-    return getFoodTruckById(id);
+  if (req.method === "POST") {
+    if (pathname === "/foodtrucks") {
+      // Create a new food truck
+      const body = await req.json();
+      return createFoodTruck(body);
+    } else if (pathname === "/menuitems") {
+      // Create a new menu item
+      const body = await req.json();
+      return createMenuItem(body);
+    }
   }
 
-  if (pathname === FOODTRUCKS_PATH && req.method === "POST") {
-    // Create a new food truck
-    const body = await req.json();
-    return createFoodTruck(body);
+  if (req.method === "PUT") {
+    const foodTruckId = extractId(pathname, "foodtrucks");
+    if (foodTruckId !== null && pathname === `/foodtrucks/${foodTruckId}`) {
+      // Update a specific food truck by ID
+      const body = await req.json();
+      return updateFoodTruck(foodTruckId, body);
+    }
+
+    const menuItemId = extractId(pathname, "menuitems");
+    if (menuItemId !== null && pathname === `/menuitems/${menuItemId}`) {
+      // Update a specific menu item by ID
+      const body = await req.json();
+      return updateMenuItem(menuItemId, body);
+    }
   }
 
-  if (pathname.startsWith(`${FOODTRUCKS_PATH}/`) && req.method === "PUT") {
-    // Update a specific food truck by ID
-    const id = parseInt(pathname.substring(FOODTRUCKS_PATH.length + 1), 10);
-    const body = await req.json();
-    return updateFoodTruck(id, body);
-  }
+  if (req.method === "DELETE") {
+    const foodTruckId = extractId(pathname, "foodtrucks");
+    if (foodTruckId !== null && pathname === `/foodtrucks/${foodTruckId}`) {
+      // Delete a specific food truck by ID
+      return deleteFoodTruck(foodTruckId);
+    }
 
-  if (pathname.startsWith(`${FOODTRUCKS_PATH}/`) && req.method === "DELETE") {
-    // Delete a specific food truck by ID
-    const id = parseInt(pathname.substring(FOODTRUCKS_PATH.length + 1), 10);
-    return deleteFoodTruck(id);
-  }
-
-  // Menu Items Routes
-  if (pathname.startsWith(`${MENUITEMS_PATH}/`) && req.method === "GET") {
-    // Get a specific menu item by ID
-    const id = parseInt(pathname.substring(MENUITEMS_PATH.length + 1), 10);
-    return getMenuItemById(id);
-  }
-
-  if (pathname === MENUITEMS_PATH && req.method === "POST") {
-    // Create a new menu item
-    const body = await req.json();
-    return createMenuItem(body);
-  }
-
-  if (pathname.startsWith(`${MENUITEMS_PATH}/`) && req.method === "PUT") {
-    // Update a specific menu item by ID
-    const id = parseInt(pathname.substring(MENUITEMS_PATH.length + 1), 10);
-    const body = await req.json();
-    return updateMenuItem(id, body);
-  }
-
-  if (pathname.startsWith(`${MENUITEMS_PATH}/`) && req.method === "DELETE") {
-    // Delete a specific menu item by ID
-    const id = parseInt(pathname.substring(MENUITEMS_PATH.length + 1), 10);
-    return deleteMenuItem(id);
+    const menuItemId = extractId(pathname, "menuitems");
+    if (menuItemId !== null && pathname === `/menuitems/${menuItemId}`) {
+      // Delete a specific menu item by ID
+      return deleteMenuItem(menuItemId);
+    }
   }
 
   // If no route matches, return 404 Not Found
