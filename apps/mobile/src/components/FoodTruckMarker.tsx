@@ -23,6 +23,7 @@ const FoodTruckMarker = (foodTruck: FoodTruck) => {
           latitude: parseFloat(foodTruck.latitude),
           longitude: parseFloat(foodTruck.longitude),
         }}
+        zIndex={1} // Ensure the marker is behind the callout
       >
         <Image
           source={require("../../assets/truck-icon.png")}
