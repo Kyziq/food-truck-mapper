@@ -5,7 +5,7 @@ import {
   updateFoodTruck,
   deleteFoodTruck,
   createMenuItem,
-  getMenuItemsForFoodTruck,
+  getMenuItemById,
   updateMenuItem,
   deleteMenuItem,
 } from "./routes";
@@ -24,26 +24,26 @@ async function handleRequest(req: Request): Promise<Response> {
     // Get all food trucks
     return getFoodTrucks();
   }
-  if (
-    pathname.startsWith(`${FOODTRUCKS_PATH}/`) &&
-    req.method === "GET" &&
-    !pathname.endsWith(MENUITEMS_PATH)
-  ) {
+
+  if (pathname.startsWith(`${FOODTRUCKS_PATH}/`) && req.method === "GET") {
     // Get a specific food truck by ID
     const id = parseInt(pathname.substring(FOODTRUCKS_PATH.length + 1), 10);
     return getFoodTruckById(id);
   }
+
   if (pathname === FOODTRUCKS_PATH && req.method === "POST") {
     // Create a new food truck
     const body = await req.json();
     return createFoodTruck(body);
   }
+
   if (pathname.startsWith(`${FOODTRUCKS_PATH}/`) && req.method === "PUT") {
     // Update a specific food truck by ID
     const id = parseInt(pathname.substring(FOODTRUCKS_PATH.length + 1), 10);
     const body = await req.json();
     return updateFoodTruck(id, body);
   }
+
   if (pathname.startsWith(`${FOODTRUCKS_PATH}/`) && req.method === "DELETE") {
     // Delete a specific food truck by ID
     const id = parseInt(pathname.substring(FOODTRUCKS_PATH.length + 1), 10);
@@ -51,32 +51,25 @@ async function handleRequest(req: Request): Promise<Response> {
   }
 
   // Menu Items Routes
-  if (
-    pathname.startsWith(`${FOODTRUCKS_PATH}/`) &&
-    pathname.endsWith(MENUITEMS_PATH) &&
-    req.method === "GET"
-  ) {
-    // Get menu items for a specific food truck
-    const id = parseInt(
-      pathname.substring(
-        FOODTRUCKS_PATH.length + 1,
-        pathname.lastIndexOf(MENUITEMS_PATH) - 1
-      ),
-      10
-    );
-    return getMenuItemsForFoodTruck(id);
+  if (pathname.startsWith(`${MENUITEMS_PATH}/`) && req.method === "GET") {
+    // Get a specific menu item by ID
+    const id = parseInt(pathname.substring(MENUITEMS_PATH.length + 1), 10);
+    return getMenuItemById(id);
   }
+
   if (pathname === MENUITEMS_PATH && req.method === "POST") {
     // Create a new menu item
     const body = await req.json();
     return createMenuItem(body);
   }
+
   if (pathname.startsWith(`${MENUITEMS_PATH}/`) && req.method === "PUT") {
     // Update a specific menu item by ID
     const id = parseInt(pathname.substring(MENUITEMS_PATH.length + 1), 10);
     const body = await req.json();
     return updateMenuItem(id, body);
   }
+
   if (pathname.startsWith(`${MENUITEMS_PATH}/`) && req.method === "DELETE") {
     // Delete a specific menu item by ID
     const id = parseInt(pathname.substring(MENUITEMS_PATH.length + 1), 10);

@@ -35,6 +35,7 @@ interface MenuItem {
   price: string;
 }
 
+// Fetch all food trucks
 export async function getFoodTrucks() {
   try {
     const foodTrucks = await db.select().from(food_trucks).execute();
@@ -85,7 +86,7 @@ export async function getFoodTruckById(id: number) {
     const result = await db
       .select()
       .from(food_trucks)
-      .where(eq(food_trucks.id, id)) // Correct usage
+      .where(eq(food_trucks.id, id))
       .execute();
     if (result.length === 0) {
       return new Response("Food truck not found", { status: 404 });
@@ -102,20 +103,23 @@ export async function getFoodTruckById(id: number) {
 }
 
 // Get all menu items for a specific food truck
-export async function getMenuItemsForFoodTruck(foodTruckId: number) {
+export async function getMenuItemById(id: number) {
   try {
-    const menuItems = await db
+    const result = await db
       .select()
       .from(menu_items)
-      .where(eq(menu_items.food_truck_id, foodTruckId)) // Correct usage
+      .where(eq(menu_items.id, id))
       .execute();
-    return new Response(JSON.stringify(menuItems, null, 2), {
+    if (result.length === 0) {
+      return new Response("Menu item not found", { status: 404 });
+    }
+    return new Response(JSON.stringify(result[0], null, 2), {
       headers: {
         "Content-Type": "application/json",
       },
     });
   } catch (error) {
-    console.error("Error fetching menu items:", error);
+    console.error("Error fetching menu item:", error);
     return new Response("Internal Server Error", { status: 500 });
   }
 }
@@ -126,7 +130,7 @@ export async function updateFoodTruck(id: number, reqBody: Partial<FoodTruck>) {
     const updatedFoodTruck = await db
       .update(food_trucks)
       .set(reqBody)
-      .where(eq(food_trucks.id, id)) // Correct usage
+      .where(eq(food_trucks.id, id))
       .execute();
     return new Response(JSON.stringify(updatedFoodTruck, null, 2), {
       headers: {
@@ -145,7 +149,7 @@ export async function updateMenuItem(id: number, reqBody: Partial<MenuItem>) {
     const updatedMenuItem = await db
       .update(menu_items)
       .set(reqBody)
-      .where(eq(menu_items.id, id)) // Correct usage
+      .where(eq(menu_items.id, id))
       .execute();
     return new Response(JSON.stringify(updatedMenuItem, null, 2), {
       headers: {
@@ -161,7 +165,7 @@ export async function updateMenuItem(id: number, reqBody: Partial<MenuItem>) {
 // Delete a food truck by ID
 export async function deleteFoodTruck(id: number) {
   try {
-    await db.delete(food_trucks).where(eq(food_trucks.id, id)).execute(); // Correct usage
+    await db.delete(food_trucks).where(eq(food_trucks.id, id)).execute();
     return new Response("Food truck deleted successfully", {
       headers: {
         "Content-Type": "text/plain",
@@ -176,7 +180,7 @@ export async function deleteFoodTruck(id: number) {
 // Delete a menu item by ID
 export async function deleteMenuItem(id: number) {
   try {
-    await db.delete(menu_items).where(eq(menu_items.id, id)).execute(); // Correct usage
+    await db.delete(menu_items).where(eq(menu_items.id, id)).execute();
     return new Response("Menu item deleted successfully", {
       headers: {
         "Content-Type": "text/plain",
