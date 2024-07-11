@@ -1,7 +1,5 @@
 {
-  "name": "db",
-  "module": "index.ts",
-  "type": "module",
+  "name": "backend",
   "scripts": {
     "dev": "bun src/server.ts",
     "generate": "drizzle-kit generate",
@@ -17,7 +15,6 @@
   "devDependencies": {
     "@types/bun": "latest",
     "@types/pg": "^8.11.6",
-    "drizzle-kit": "^0.23.0",
-    "typescript": "^5.5.3"
+    "drizzle-kit": "^0.23.0"
   }
 }
