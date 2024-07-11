@@ -33,7 +33,7 @@ Welcome to the Food Truck Mapper project, a comprehensive solution for mapping f
 ## Project Structure
 
 - `/apps/mobile`: A React Native app for the user interface.
-- `/apps/backend`: A PostgreSQL database managed with DrizzleORM for data persistence and server logic using `Bun.serve`.
+- `/apps/backend`: A PostgreSQL database managed with DrizzleORM for data persistence and server logic using Bun.
 
 ## Remote Caching with Turborepo
 

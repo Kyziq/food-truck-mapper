@@ -15,17 +15,17 @@ bun install
 
 ## Environment Configuration
 
-Before proceeding, make sure to set up your environment variables. Copy the example environment file and rename it to `.env`, then update its content with your actual database credentials.
+1. Before proceeding, make sure to set up your environment variables. Copy the example environment file and rename it to `.env`, then update its content with your actual database credentials.
 
-```bash
-cp .env.example .env
-```
+   ```bash
+   cp .env.example .env
+   ```
 
-Edit the `.env` file and update the `DB_URL` variable with your PostgreSQL connection string.
+2. Edit the `.env` file and update the `DB_URL` variable with your PostgreSQL connection string.
 
-```env
-DB_URL=your_database_url_here
-```
+   ```env
+   DB_URL=your_database_url_here
+   ```
 
 ## Database Setup
 
