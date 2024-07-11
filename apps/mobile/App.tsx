@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Image } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import { StatusBar } from "expo-status-bar";
@@ -10,21 +10,19 @@ type LocationCoords = {
   longitude: number;
 };
 
-const coordinates = [
-  { latitude: 6.484502613485699, longitude: 100.15292748609222 },
-  { latitude: 6.464147480466234, longitude: 100.24028517369136 },
-  { latitude: 6.465773594485885, longitude: 100.15569238870664 },
-  { latitude: 6.42504136979509, longitude: 100.19511569310251 },
-  { latitude: 6.461272961509523, longitude: 100.18291406671028 },
-  { latitude: 6.422704650732263, longitude: 100.16859365742137 },
-  { latitude: 6.398735169573326, longitude: 100.2084033033223 },
-  { latitude: 6.453985319261708, longitude: 100.1848869267669 },
-  { latitude: 6.477055850575472, longitude: 100.2025060561632 },
-];
+type FoodTruck = {
+  id: number;
+  name: string;
+  latitude: string;
+  longitude: string;
+  schedule: string;
+  operator_name: string;
+};
 
 export default function App() {
   const [location, setLocation] = useState<LocationCoords | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [foodTrucks, setFoodTrucks] = useState<FoodTruck[]>([]);
 
   useEffect(() => {
     (async () => {
@@ -40,6 +38,19 @@ export default function App() {
         longitude: location.coords.longitude,
       });
     })();
+
+    // Fetch food trucks data from the API
+    const fetchFoodTrucks = async () => {
+      try {
+        const response = await fetch("http://192.168.0.106:3234/foodtrucks"); // Change this to your local IP address
+        const data: FoodTruck[] = await response.json();
+        setFoodTrucks(data);
+      } catch (error) {
+        console.error("Failed to fetch food trucks:", error);
+      }
+    };
+
+    fetchFoodTrucks();
   }, []);
 
   let region = {
@@ -69,15 +80,22 @@ export default function App() {
             title={"Your Location"}
           />
         )}
-        {coordinates.map((coord, index) => (
+        {foodTrucks.map((truck) => (
           <Marker
-            key={index}
+            key={truck.id}
             coordinate={{
-              latitude: coord.latitude,
-              longitude: coord.longitude,
+              latitude: parseFloat(truck.latitude),
+              longitude: parseFloat(truck.longitude),
             }}
-            title={`Location ${index + 1}`}
-          />
+            title={truck.name}
+            description={truck.schedule}
+          >
+            <Image
+              source={require("./assets/truck-icon.png")}
+              style={{ width: 40, height: 40 }}
+              resizeMode="contain"
+            />
+          </Marker>
         ))}
       </MapView>
       <StatusBar style="auto" />
