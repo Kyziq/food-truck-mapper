@@ -15,5 +15,8 @@
   "workspaces": [
     "apps/*"
   ],
-  "private": true
+  "private": true,
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
 }
