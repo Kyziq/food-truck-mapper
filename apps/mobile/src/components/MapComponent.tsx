@@ -1,5 +1,5 @@
-import React from "react";
-import MapView, { Marker } from "react-native-maps";
+import React, { useEffect, useState } from "react";
+import MapView, { Marker, Region } from "react-native-maps";
 import FoodTruckMarker from "./FoodTruckMarker";
 import { StyleSheet, Dimensions } from "react-native";
 
@@ -19,23 +19,29 @@ type MapComponentProps = {
 };
 
 const MapComponent = ({ location, foodTrucks }: MapComponentProps) => {
-  let region = {
+  const [region, setRegion] = useState<Region>({
     latitude: 3.139,
     longitude: 101.6869,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
-  };
+  });
 
-  if (location) {
-    region = {
-      ...region,
-      latitude: location.latitude,
-      longitude: location.longitude,
-    };
-  }
+  useEffect(() => {
+    if (location) {
+      setRegion({
+        ...region,
+        latitude: location.latitude,
+        longitude: location.longitude,
+      });
+    }
+  }, [location]);
 
   return (
-    <MapView style={styles.map} initialRegion={region}>
+    <MapView
+      style={styles.map}
+      region={region}
+      onRegionChangeComplete={setRegion}
+    >
       {location && (
         <Marker
           coordinate={{
