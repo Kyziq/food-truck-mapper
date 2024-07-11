@@ -11,6 +11,11 @@ const client = new Client({
 
 const db = drizzle(client);
 
+interface MenuItem {
+  name: string;
+  price: string;
+}
+
 interface FoodTruck {
   id?: number;
   name: string;
@@ -18,12 +23,7 @@ interface FoodTruck {
   longitude: string;
   schedule: string;
   operator_name: string;
-}
-
-interface MenuItem {
-  food_truck_id: number;
-  name: string;
-  price: string;
+  menu_items: MenuItem[];
 }
 
 // Function to generate random latitude and longitude near Arau, Perlis, Malaysia
@@ -55,9 +55,10 @@ function generateRandomScheduleAndOperator(): {
   const operators = [
     "Adib Asyraaf",
     "Khairul Haziq",
-    "Ahmad Ibe",
-    "Ibe Lorenzo",
-    "Ahmad Kiziq",
+    "Adam Abrar",
+    "Syed Athif",
+    "Iqbal",
+    "Arif Salehuddin",
   ];
 
   const randomSchedule =
@@ -66,46 +67,6 @@ function generateRandomScheduleAndOperator(): {
     operators[Math.floor(Math.random() * operators.length)];
 
   return { schedule: randomSchedule, operator_name: randomOperator };
-}
-
-// Function to generate random menu items for a food truck
-function generateRandomMenuItems(foodTruckId: number): MenuItem[] {
-  const foodNames = [
-    "Nasi Lemak",
-    "Roti Canai",
-    "Char Kway Teow",
-    "Satay",
-    "Laksa",
-    "Hainanese Chicken Rice",
-    "Mee Goreng",
-    "Rendang",
-    "Nasi Ayam (Chicken Rice)",
-    "Murtabak",
-    "Teh Tarik",
-    "Rojak",
-    "Curry Mee",
-    "Bak Kut Teh",
-    "Cendol",
-    "Chicken Satay",
-    "Mee Rebus",
-    "Asam Laksa",
-    "Nasi Kerabu",
-    "Mee Siam",
-  ];
-
-  const menuItemsData: MenuItem[] = [];
-
-  foodNames.forEach((foodName) => {
-    const price = (Math.random() * (15 - 5) + 5).toFixed(2);
-
-    menuItemsData.push({
-      food_truck_id: foodTruckId,
-      name: foodName,
-      price: price.toString(),
-    });
-  });
-
-  return menuItemsData;
 }
 
 async function seed() {
@@ -117,78 +78,81 @@ async function seed() {
       name: "Coconut Shake Onthego",
       ...generateRandomLocation(),
       ...generateRandomScheduleAndOperator(),
+      menu_items: [
+        { name: "Coconut Shake", price: "9.00" },
+        { name: "Coconut Juice", price: "10.00" },
+        { name: "Ice Cream", price: "12.00" },
+        { name: "Ice Blended", price: "10.00" },
+      ],
     },
     {
       name: "Tenom Rangers",
       ...generateRandomLocation(),
       ...generateRandomScheduleAndOperator(),
+      menu_items: [
+        { name: "Tenom Coffee", price: "5.00" },
+        { name: "Tenom Tea", price: "4.00" },
+      ],
     },
     {
       name: "Samarqunz FT",
       ...generateRandomLocation(),
       ...generateRandomScheduleAndOperator(),
+      menu_items: [{ name: "Nasi Arab Samarkhan", price: "15.00" }],
     },
     {
       name: "Raudhah Fried Chicken",
       ...generateRandomLocation(),
       ...generateRandomScheduleAndOperator(),
+      menu_items: [{ name: "Fried Chicken", price: "5.00" }],
     },
     {
       name: "Miecord Foodtruck",
       ...generateRandomLocation(),
       ...generateRandomScheduleAndOperator(),
-    },
-    {
-      name: "Gyukushi King",
-      ...generateRandomLocation(),
-      ...generateRandomScheduleAndOperator(),
-    },
-    {
-      name: "Dr Fried Chicken",
-      ...generateRandomLocation(),
-      ...generateRandomScheduleAndOperator(),
-    },
-    {
-      name: "Anie Noor Dklate",
-      ...generateRandomLocation(),
-      ...generateRandomScheduleAndOperator(),
-    },
-    {
-      name: "Paparizzo",
-      ...generateRandomLocation(),
-      ...generateRandomScheduleAndOperator(),
-    },
-    {
-      name: "Cendol Langat Solar Cafe",
-      ...generateRandomLocation(),
-      ...generateRandomScheduleAndOperator(),
-    },
-    {
-      name: "Sup Kedah Paksu Naim",
-      ...generateRandomLocation(),
-      ...generateRandomScheduleAndOperator(),
-    },
-    {
-      name: "Shahna Concept",
-      ...generateRandomLocation(),
-      ...generateRandomScheduleAndOperator(),
+      menu_items: [
+        { name: "Char Kuey Teow", price: "15.00" },
+        { name: "Mee Goreng Hitam", price: "13.00" },
+        { name: "Kuey Teow Goreng", price: "13.00" },
+        { name: "Kuey Teow Kerang", price: "13.00" },
+        { name: "Cendol", price: "13.00" },
+      ],
     },
     {
       name: "Murtabak Cheese Sijangkang",
       ...generateRandomLocation(),
       ...generateRandomScheduleAndOperator(),
+      menu_items: [
+        { name: "Murtabak Biasa", price: "6.00" },
+        { name: "Murtabak Cheese", price: "7.00" },
+      ],
     },
     {
-      name: "Dr Fried Chicken",
+      name: "Koods Pizza",
       ...generateRandomLocation(),
       ...generateRandomScheduleAndOperator(),
+      menu_items: [
+        { name: "Wagyu Pizza", price: "56.00" },
+        { name: "Pepperoni Beef Pizza", price: "15.00" },
+      ],
     },
     {
-      name: "Familia Kitchen",
+      name: "Kambing Golek Malaysia",
       ...generateRandomLocation(),
       ...generateRandomScheduleAndOperator(),
+      menu_items: [{ name: "Kambing", price: "15.00" }],
     },
-    // Add more entries as needed
+    {
+      name: "Famous Coconut Shake",
+      ...generateRandomLocation(),
+      ...generateRandomScheduleAndOperator(),
+      menu_items: [
+        { name: "Coconut Shake", price: "7.00" },
+        { name: "Mango Milk Shake", price: "8.00" },
+        { name: "Banana Milk Shake", price: "8.00" },
+        { name: "Dragon Fruit Milk Shake", price: "8.00" },
+      ],
+    },
   ];
 
   // Insert data into the food_trucks table and get the inserted IDs
@@ -205,10 +169,18 @@ async function seed() {
     )
     .returning();
 
-  // Insert data into the menu_items table for each food truck using the returned IDs
-  for (const truck of insertedFoodTrucks) {
-    const menuItemsData = generateRandomMenuItems(truck.id);
-    await db.insert(menu_items).values(menuItemsData);
+  // Insert data into the menu_items table for each food truck using the predefined menu items
+  for (let i = 0; i < insertedFoodTrucks.length; i++) {
+    const truck = insertedFoodTrucks[i];
+    const items = foodTrucksData[i].menu_items;
+    if (items) {
+      const menuItems = items.map((item) => ({
+        food_truck_id: truck.id!,
+        name: item.name,
+        price: item.price,
+      }));
+      await db.insert(menu_items).values(menuItems);
+    }
   }
 
   await client.end();
