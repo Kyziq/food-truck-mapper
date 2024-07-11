@@ -80,3 +80,21 @@ Start the Bun HTTP server:
 ```bash
 bun dev
 ```
+
+## API Endpoints
+
+### Food Trucks
+
+- **GET** `/foodtrucks`: Retrieve all food trucks.
+- **GET** `/foodtrucks/:id`: Retrieve a food truck by ID.
+- **POST** `/foodtrucks`: Create a new food truck.
+- **PUT** `/foodtrucks/:id`: Update a food truck by ID.
+- **DELETE** `/foodtrucks/:id`: Delete a food truck by ID.
+
+### Menu Items
+
+- **GET** `/menuitems`: Retrieve all menu items.
+- **GET** `/foodtrucks/:id/menuitems`: Retrieve all menu items for a food truck.
+- **POST** `/menuitems`: Create a new menu item.
+- **PUT** `/menuitems/:id`: Update a menu item by ID.
+- **DELETE** `/menuitems/:id`: Delete a menu item by ID.
