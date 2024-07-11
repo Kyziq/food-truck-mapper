@@ -59,6 +59,7 @@ function generateRandomScheduleAndOperator(): {
     "Syed Athif",
     "Iqbal",
     "Arif Salehuddin",
+    "Hafizi",
   ];
 
   const randomSchedule =
