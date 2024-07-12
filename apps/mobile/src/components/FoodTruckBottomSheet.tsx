@@ -83,6 +83,10 @@ const FoodTruckBottomSheet = forwardRef<BottomSheet, FoodTruckBottomSheetProps>(
           <Text style={styles.menuTitle}>Menu:</Text>
           {loading ? (
             <ActivityIndicator size="large" color="#0000ff" />
+          ) : menuItems.length === 0 ? (
+            <Text style={styles.noMenuText}>
+              No menu available for this truck.
+            </Text>
           ) : (
             menuItems.map((item, index) => (
               <Text key={index} style={styles.menuItem}>
@@ -125,6 +129,11 @@ const styles = StyleSheet.create({
   },
   menuItem: {
     marginBottom: 5,
+  },
+  noMenuText: {
+    fontSize: 14,
+    fontStyle: "italic",
+    color: "gray",
   },
 });
 
