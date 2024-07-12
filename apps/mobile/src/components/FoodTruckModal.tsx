@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -6,8 +6,10 @@ import {
   StyleSheet,
   Dimensions,
   Modal,
+  ActivityIndicator,
 } from "react-native";
-import { FoodTruck } from "../types";
+import { FoodTruck, MenuItem } from "../types";
+import { fetchMenuItems } from "../utils/fetchMenuItems";
 
 type FoodTruckModalProps = {
   visible: boolean;
@@ -20,6 +22,22 @@ const FoodTruckModal = ({
   onClose,
   foodTruck,
 }: FoodTruckModalProps) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+
+  useEffect(() => {
+    const loadMenuItems = async () => {
+      if (foodTruck) {
+        setLoading(true);
+        const items = await fetchMenuItems(foodTruck.id);
+        setMenuItems(items);
+        setLoading(false);
+      }
+    };
+
+    loadMenuItems();
+  }, [foodTruck]);
+
   if (!visible || !foodTruck) {
     return null;
   }
@@ -37,9 +55,15 @@ const FoodTruckModal = ({
           <Text>Operator: {foodTruck.operator_name}</Text>
           <Text>Schedule: {foodTruck.schedule}</Text>
           <Text>Menu:</Text>
-          <Text>- Item 1</Text>
-          <Text>- Item 2</Text>
-          <Text>- Item 3</Text>
+          {loading ? (
+            <ActivityIndicator size="large" color="#0000ff" />
+          ) : (
+            menuItems.map((item, index) => (
+              <Text key={index}>
+                - {item.name} (RM{item.price})
+              </Text>
+            ))
+          )}
           <Button title="Close" onPress={onClose} />
         </View>
       </View>

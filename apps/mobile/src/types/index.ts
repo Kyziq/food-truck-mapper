@@ -11,3 +11,8 @@ export type FoodTruck = {
   schedule: string;
   operator_name: string;
 };
+
+export type MenuItem = {
+  name: string;
+  price: string;
+};
