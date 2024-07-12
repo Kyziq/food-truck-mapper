@@ -177,6 +177,12 @@ export async function updateMenuItem(id: number, reqBody: Partial<MenuItem>) {
 // Delete a food truck by ID
 export async function deleteFoodTruck(id: number) {
   try {
+    // Delete all menu items related to the food truck
+    await db
+      .delete(menu_items)
+      .where(eq(menu_items.food_truck_id, id))
+      .execute();
+    // Delete the food truck
     await db.delete(food_trucks).where(eq(food_trucks.id, id)).execute();
     return new Response("Food truck deleted successfully", {
       headers: {
