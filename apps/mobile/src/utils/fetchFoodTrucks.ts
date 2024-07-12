@@ -1,6 +1,11 @@
+import Constants from "expo-constants";
+
+const apiBaseUrl = Constants.expoConfig?.extra?.apiBaseUrl;
+
 export const fetchFoodTrucks = async () => {
   try {
-    const response = await fetch("http://192.168.0.106:3234/foodtrucks"); // Change this to your local IP address
+    console.log(`Fetching from ${apiBaseUrl}/foodtrucks`); // Add this line
+    const response = await fetch(`${apiBaseUrl}/foodtrucks`);
     const data = await response.json();
     return data;
   } catch (error) {

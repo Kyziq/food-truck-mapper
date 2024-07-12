@@ -4,13 +4,14 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "dev": "expo start",
+    "dev": "expo start -c",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject"
   },
   "dependencies": {
     "expo": "^51.0.18",
+    "expo-constants": "^16.0.2",
     "expo-location": "^17.0.1",
     "expo-status-bar": "~1.12.1",
     "react": "18.2.0",
