@@ -12,7 +12,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
-import BottomSheet from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { FoodTruck, MenuItem } from "../types";
 import { fetchMenuItems } from "../utils/api";
 
@@ -62,6 +62,15 @@ const FoodTruckBottomSheet = forwardRef<BottomSheet, FoodTruckBottomSheetProps>(
       }
     };
 
+    const renderItem = ({ item }: { item: MenuItem }) => (
+      <View style={styles.menuRow}>
+        <Text style={styles.menuItemName}>{item.name}</Text>
+        <Text style={styles.menuItemPrice}>
+          RM{parseFloat(item.price).toFixed(2)}
+        </Text>
+      </View>
+    );
+
     return (
       <BottomSheet
         ref={ref}
@@ -78,8 +87,10 @@ const FoodTruckBottomSheet = forwardRef<BottomSheet, FoodTruckBottomSheetProps>(
             <Text style={styles.closeButtonText}>✕</Text>
           </TouchableOpacity>
           <Text style={styles.title}>{foodTruck.name}</Text>
-          <Text>Operator: {foodTruck.operator_name}</Text>
-          <Text>Schedule: {foodTruck.schedule}</Text>
+          <Text style={styles.operator}>
+            Operator: {foodTruck.operator_name}
+          </Text>
+          <Text style={styles.schedule}>Schedule: {foodTruck.schedule}</Text>
           <Text style={styles.menuTitle}>Menu:</Text>
           {loading ? (
             <ActivityIndicator size="large" color="#0000ff" />
@@ -88,11 +99,11 @@ const FoodTruckBottomSheet = forwardRef<BottomSheet, FoodTruckBottomSheetProps>(
               No menu available for this truck.
             </Text>
           ) : (
-            menuItems.map((item, index) => (
-              <Text key={index} style={styles.menuItem}>
-                - {item.name} (RM{item.price})
-              </Text>
-            ))
+            <BottomSheetFlatList
+              data={menuItems}
+              renderItem={renderItem}
+              keyExtractor={(item, index) => index.toString()}
+            />
           )}
         </View>
       </BottomSheet>
@@ -102,9 +113,10 @@ const FoodTruckBottomSheet = forwardRef<BottomSheet, FoodTruckBottomSheetProps>(
 
 const styles = StyleSheet.create({
   contentContainer: {
-    flex: 1,
-    padding: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
     backgroundColor: "white",
+    flex: 1,
   },
   closeButton: {
     position: "absolute",
@@ -116,10 +128,18 @@ const styles = StyleSheet.create({
     color: "#000",
   },
   title: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: "bold",
-    marginBottom: 10,
-    marginTop: 20,
+    marginBottom: 5,
+  },
+  operator: {
+    fontSize: 12,
+    color: "#555",
+    marginBottom: 5,
+  },
+  schedule: {
+    fontSize: 12,
+    color: "#555",
   },
   menuTitle: {
     fontSize: 16,
@@ -127,13 +147,23 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 5,
   },
-  menuItem: {
-    marginBottom: 5,
-  },
   noMenuText: {
     fontSize: 14,
     fontStyle: "italic",
     color: "gray",
+  },
+  menuRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#f0f0f0",
+  },
+  menuItemName: {
+    fontSize: 14,
+  },
+  menuItemPrice: {
+    fontSize: 14,
   },
 });
 
