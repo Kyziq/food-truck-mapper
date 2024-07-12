@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import MapComponent from "./src/components/MapComponent";
 import LocationPermission from "./src/components/LocationPermission";
-import { fetchFoodTrucks } from "./src/utils/fetchFoodTrucks";
+import { fetchFoodTrucks } from "./src/utils/api";
 import { StyleSheet, Dimensions } from "react-native";
 import { LocationCoords, FoodTruck } from "./src/types";
 

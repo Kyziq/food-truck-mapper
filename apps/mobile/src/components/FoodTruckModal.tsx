@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { FoodTruck, MenuItem } from "../types";
-import { fetchMenuItems } from "../utils/fetchMenuItems";
+import { fetchMenuItems } from "../utils/api";
 
 type FoodTruckModalProps = {
   visible: boolean;
