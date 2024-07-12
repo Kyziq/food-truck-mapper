@@ -1,10 +1,6 @@
 import { useEffect } from "react";
 import * as Location from "expo-location";
-
-type LocationCoords = {
-  latitude: number;
-  longitude: number;
-};
+import { LocationCoords } from "../types";
 
 type LocationPermissionProps = {
   onLocationRetrieved: (location: LocationCoords) => void;
