@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import MapComponent from "./src/components/MapComponent";
 import LocationPermission from "./src/components/LocationPermission";
 import { fetchFoodTrucks } from "./src/utils/api";
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { LocationCoords, FoodTruck } from "./src/types";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function App() {
   const [location, setLocation] = useState<LocationCoords | null>(null);
@@ -14,8 +15,12 @@ export default function App() {
 
   useEffect(() => {
     const loadFoodTrucks = async () => {
-      const data = await fetchFoodTrucks();
-      setFoodTrucks(data);
+      try {
+        const data = await fetchFoodTrucks();
+        setFoodTrucks(data);
+      } catch (error) {
+        console.error("Failed to fetch food trucks:", error);
+      }
     };
 
     loadFoodTrucks();
@@ -25,23 +30,25 @@ export default function App() {
   const handleError = (error: string) => setErrorMsg(error);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <LocationPermission
-        onLocationRetrieved={handleLocationRetrieved}
-        onError={handleError}
-      />
-      <MapComponent location={location} foodTrucks={foodTrucks} />
-      <StatusBar style="auto" />
-    </SafeAreaView>
+    <GestureHandlerRootView style={styles.container}>
+      <SafeAreaProvider>
+        <SafeAreaView style={styles.container}>
+          <StatusBar style="auto" />
+          <View style={styles.container}>
+            <LocationPermission
+              onLocationRetrieved={handleLocationRetrieved}
+              onError={handleError}
+            />
+            <MapComponent location={location} foodTrucks={foodTrucks} />
+          </View>
+        </SafeAreaView>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  map: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
   },
 });

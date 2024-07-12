@@ -1,21 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import MapView, { Marker, Region } from "react-native-maps";
 import FoodTruckMarker from "./FoodTruckMarker";
-import { StyleSheet, Dimensions } from "react-native";
+import FoodTruckBottomSheet from "./FoodTruckBottomSheet";
+import { StyleSheet, View } from "react-native";
+import { FoodTruck } from "../types";
+import BottomSheet from "@gorhom/bottom-sheet";
 
 type MapComponentProps = {
   location: {
     latitude: number;
     longitude: number;
   } | null;
-  foodTrucks: {
-    id: number;
-    name: string;
-    latitude: string;
-    longitude: string;
-    schedule: string;
-    operator_name: string;
-  }[];
+  foodTrucks: FoodTruck[];
 };
 
 const MapComponent = ({ location, foodTrucks }: MapComponentProps) => {
@@ -24,7 +20,11 @@ const MapComponent = ({ location, foodTrucks }: MapComponentProps) => {
     longitude: 101.6869,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
-  });
+  }); // Region for Kuala Lumpur
+  const [selectedFoodTruck, setSelectedFoodTruck] = useState<FoodTruck | null>(
+    null
+  );
+  const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
 
   useEffect(() => {
     if (location) {
@@ -36,32 +36,59 @@ const MapComponent = ({ location, foodTrucks }: MapComponentProps) => {
     }
   }, [location]);
 
+  const bottomSheetRef = useRef<BottomSheet>(null);
+
+  const handleMarkerPress = useCallback((foodTruck: FoodTruck) => {
+    setSelectedFoodTruck(foodTruck);
+    setIsBottomSheetVisible(true);
+  }, []);
+
+  const handleCloseBottomSheet = useCallback(() => {
+    setIsBottomSheetVisible(false);
+  }, []);
+
   return (
-    <MapView
-      style={styles.map}
-      region={region}
-      onRegionChangeComplete={setRegion}
-    >
-      {location && (
-        <Marker
-          coordinate={{
-            latitude: location.latitude,
-            longitude: location.longitude,
-          }}
-          title={"Your Location"}
+    <View style={styles.container}>
+      <MapView
+        style={styles.map}
+        region={region}
+        onRegionChangeComplete={setRegion}
+      >
+        {location && (
+          <Marker
+            coordinate={{
+              latitude: location.latitude,
+              longitude: location.longitude,
+            }}
+            title={"Your Location"}
+          />
+        )}
+        {foodTrucks.map((truck) => (
+          <FoodTruckMarker
+            key={truck.id}
+            {...truck}
+            onPress={() => handleMarkerPress(truck)}
+          />
+        ))}
+      </MapView>
+      {selectedFoodTruck && (
+        <FoodTruckBottomSheet
+          ref={bottomSheetRef}
+          foodTruck={selectedFoodTruck}
+          isVisible={isBottomSheetVisible}
+          onClose={handleCloseBottomSheet}
         />
       )}
-      {foodTrucks.map((truck) => (
-        <FoodTruckMarker key={truck.id} {...truck} />
-      ))}
-    </MapView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   map: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
+    ...StyleSheet.absoluteFillObject,
   },
 });
 

@@ -1,51 +1,37 @@
-import React, { useState } from "react";
+import React from "react";
 import { Marker, Callout } from "react-native-maps";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import FoodTruckModal from "./FoodTruckModal";
 import { FoodTruck } from "../types";
 
-const FoodTruckMarker = (foodTruck: FoodTruck) => {
-  const [modalVisible, setModalVisible] = useState(false);
+type FoodTruckMarkerProps = FoodTruck & {
+  onPress: () => void;
+};
 
-  const handleShowMore = () => {
-    setModalVisible(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalVisible(false);
-  };
+const FoodTruckMarker = (props: FoodTruckMarkerProps) => {
+  const { id, name, latitude, longitude, schedule, onPress } = props;
 
   return (
-    <View>
-      <Marker
-        key={foodTruck.id}
-        coordinate={{
-          latitude: parseFloat(foodTruck.latitude),
-          longitude: parseFloat(foodTruck.longitude),
-        }}
-        zIndex={1} // Ensure the marker is behind the callout
-      >
-        <Image
-          source={require("../../assets/truck-icon.png")}
-          style={{ width: 40, height: 40 }}
-          resizeMode="contain"
-        />
-        <Callout>
-          <View style={styles.callout}>
-            <Text style={styles.title}>{foodTruck.name}</Text>
-            <Text>{foodTruck.schedule}</Text>
-            <TouchableOpacity onPress={handleShowMore}>
-              <Text style={styles.showMore}>Show More</Text>
-            </TouchableOpacity>
-          </View>
-        </Callout>
-      </Marker>
-      <FoodTruckModal
-        visible={modalVisible}
-        onClose={handleCloseModal}
-        foodTruck={foodTruck}
+    <Marker
+      coordinate={{
+        latitude: parseFloat(latitude),
+        longitude: parseFloat(longitude),
+      }}
+    >
+      <Image
+        source={require("../../assets/truck-icon.png")}
+        style={{ width: 40, height: 40 }}
+        resizeMode="contain"
       />
-    </View>
+      <Callout>
+        <View style={styles.callout}>
+          <Text style={styles.title}>{name}</Text>
+          <Text>{schedule}</Text>
+          <TouchableOpacity onPress={onPress}>
+            <Text style={styles.showMore}>Show More</Text>
+          </TouchableOpacity>
+        </View>
+      </Callout>
+    </Marker>
   );
 };
 
