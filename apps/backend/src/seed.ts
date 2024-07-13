@@ -158,7 +158,7 @@ async function seed() {
         { name: "Bakso Mercun", price: "12.00" },
         { name: "Bakso Tumpang", price: "12.00" },
         { name: "Bakso Volcano", price: "14.00" },
-        { name: "Set Nasi Ayam Penyet", price: "" },
+        { name: "Set Nasi Ayam Penyet", price: "10.00" },
       ],
     },
   ];
