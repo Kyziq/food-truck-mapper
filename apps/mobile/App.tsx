@@ -24,9 +24,21 @@ export default function App() {
           <StatusBar style="auto" />
           <NavigationContainer>
             <Stack.Navigator initialRouteName="Home">
-              <Stack.Screen name="Home" component={Home} />
-              <Stack.Screen name="MapPage" component={MapPage} />
-              <Stack.Screen name="AboutUs" component={AboutUs} />
+              <Stack.Screen
+                name="Home"
+                component={Home}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="MapPage"
+                component={MapPage}
+                options={{ title: "Map" }}
+              />
+              <Stack.Screen
+                name="AboutUs"
+                component={AboutUs}
+                options={{ title: "About Us" }}
+              />
             </Stack.Navigator>
           </NavigationContainer>
         </SafeAreaView>
