@@ -114,7 +114,7 @@ const FoodTruckBottomSheet = forwardRef<BottomSheet, FoodTruckBottomSheetProps>(
 const styles = StyleSheet.create({
   contentContainer: {
     paddingLeft: 20,
-    paddingRight: 20,
+    paddingRight: 10,
     backgroundColor: "white",
     flex: 1,
   },
@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "bold",
     marginBottom: 5,
+    paddingRight: 20, // Ensure there's space for the close button
   },
   operator: {
     fontSize: 12,
@@ -156,6 +157,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingVertical: 10,
+    paddingRight: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#f0f0f0",
   },
