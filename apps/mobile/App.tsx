@@ -1,46 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
-import MapComponent from "./src/components/MapComponent";
-import LocationPermission from "./src/components/LocationPermission";
-import { fetchFoodTrucks } from "./src/utils/api";
-import { StyleSheet, View } from "react-native";
-import { LocationCoords, FoodTruck } from "./src/types";
+import { StyleSheet } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { enableScreens } from "react-native-screens";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
+import Home from "./src/pages/Home";
+import AboutUs from "./src/pages/AboutUs";
+import MapPage from "./src/pages/MapPage";
+
+// Enable native screens for better performance
+enableScreens();
+
+const Stack = createNativeStackNavigator();
+
 export default function App() {
-  const [location, setLocation] = useState<LocationCoords | null>(null);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [foodTrucks, setFoodTrucks] = useState<FoodTruck[]>([]);
-
-  useEffect(() => {
-    const loadFoodTrucks = async () => {
-      try {
-        const data = await fetchFoodTrucks();
-        setFoodTrucks(data);
-      } catch (error) {
-        console.error("Failed to fetch food trucks:", error);
-      }
-    };
-
-    loadFoodTrucks();
-  }, []);
-
-  const handleLocationRetrieved = (loc: LocationCoords) => setLocation(loc);
-  const handleError = (error: string) => setErrorMsg(error);
-
   return (
     <GestureHandlerRootView style={styles.container}>
       <SafeAreaProvider>
         <SafeAreaView style={styles.container}>
           <StatusBar style="auto" />
-          <View style={styles.container}>
-            <LocationPermission
-              onLocationRetrieved={handleLocationRetrieved}
-              onError={handleError}
-            />
-            <MapComponent location={location} foodTrucks={foodTrucks} />
-          </View>
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName="Home">
+              <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen name="MapPage" component={MapPage} />
+              <Stack.Screen name="AboutUs" component={AboutUs} />
+            </Stack.Navigator>
+          </NavigationContainer>
         </SafeAreaView>
       </SafeAreaProvider>
     </GestureHandlerRootView>
