@@ -26,48 +26,19 @@ interface FoodTruck {
   menu_items: MenuItem[];
 }
 
-// Function to generate random latitude and longitude near Arau, Perlis, Malaysia
-function generateRandomLocation(): { latitude: string; longitude: string } {
-  const latOffset = (Math.random() - 0.5) * 0.1;
-  const lngOffset = (Math.random() - 0.5) * 0.1;
-
-  const baseLat = 6.4402;
-  const baseLng = 100.1986;
-
-  const latitude = (baseLat + latOffset).toString();
-  const longitude = (baseLng + lngOffset).toString();
-
-  return { latitude, longitude };
-}
-
-// Function to generate random schedule and operator name
-function generateRandomScheduleAndOperator(): {
-  schedule: string;
-  operator_name: string;
-} {
-  const schedules = [
-    "Mon-Fri: 11am-3pm",
-    "Mon-Fri: 12pm-4pm",
-    "Mon-Fri: 1pm-5pm",
-    "Mon-Fri: 2pm-6pm",
-  ];
-
+// Function to generate random operator name
+function generateRandomOperator(): string {
   const operators = [
     "Adib Asyraaf",
     "Khairul Haziq",
     "Adam Abrar",
     "Syed Athif",
-    "Iqbal",
+    "Muhammad Iqbal",
     "Arif Salehuddin",
-    "Hafizi",
+    "Alif Hafizi",
   ];
 
-  const randomSchedule =
-    schedules[Math.floor(Math.random() * schedules.length)];
-  const randomOperator =
-    operators[Math.floor(Math.random() * operators.length)];
-
-  return { schedule: randomSchedule, operator_name: randomOperator };
+  return operators[Math.floor(Math.random() * operators.length)];
 }
 
 async function seed() {
@@ -76,82 +47,118 @@ async function seed() {
   // Prepare data for food_trucks insertion
   const foodTrucksData: FoodTruck[] = [
     {
-      name: "Coconut Shake Onthego",
-      ...generateRandomLocation(),
-      ...generateRandomScheduleAndOperator(),
+      name: "MK Muhibbien Kitchen Foodtruck",
+      latitude: "6.12805409036393",
+      longitude: "100.35833604654881",
+      schedule: "Sunday - Saturday, 7:30PM - 3.30AM",
+      operator_name: "Nurul Aini binti Ramli",
       menu_items: [
-        { name: "Coconut Shake", price: "9.00" },
-        { name: "Coconut Juice", price: "10.00" },
-        { name: "Ice Cream", price: "12.00" },
-        { name: "Ice Blended", price: "10.00" },
+        { name: "Oblong Regular (Ayam)", price: "6.00" },
+        { name: "Oblong Special (Ayam)", price: "7.00" },
+        { name: "Oblong Double (Ayam)", price: "9.00" },
+        { name: "Oblong Double Special (Ayam)", price: "11.00" },
+        { name: "Oblong Regular (Lembu)", price: "8.00" },
+        { name: "Oblong Special (Lembu)", price: "10.00" },
+        { name: "Oblong Double (Lembu)", price: "12.00" },
+        { name: "Oblong Double Special (Lembu)", price: "14.00" },
+        { name: "Burger Tebal Regular (Ayam)", price: "5.00" },
+        { name: "Burger Tebal Special (Ayam)", price: "6.00" },
+        { name: "Burger Tebal Double (Ayam)", price: "8.00" },
+        { name: "Burger Tebal Double Special (Ayam)", price: "9.00" },
+        { name: "Burger Tebal Regular (Lembu)", price: "7.00" },
+        { name: "Burger Tebal Special (Lembu)", price: "8.00" },
+        { name: "Burger Tebal Double (Lembu)", price: "10.00" },
+        { name: "Burger Tebal Double Special (Lembu)", price: "11.00" },
+        { name: "Burger Tebal Regular (Kambing)", price: "8.00" },
+        { name: "Burger Tebal Special (Kambing)", price: "10.00" },
+        { name: "Burger Tebal Double (Kambing)", price: "12.00" },
+        { name: "Burger Tebal Double Special (Kambing)", price: "13.00" },
+        { name: "Burger Nipis Regular (Ayam)", price: "4.00" },
+        { name: "Burger Nipis Special (Ayam)", price: "5.00" },
+        { name: "Burger Nipis Double (Ayam)", price: "6.00" },
+        { name: "Burger Nipis Double Special (Ayam)", price: "7.00" },
+        { name: "Burger Nipis Regular (Lembu)", price: "4.00" },
+        { name: "Burger Nipis Special (Lembu)", price: "5.00" },
+        { name: "Burger Nipis Double (Lembu)", price: "6.00" },
+        { name: "Burger Nipis Double Special (Lembu)", price: "7.00" },
+        { name: "Burger Ayam Crispy Grill/Chop Regular", price: "6.00" },
+        { name: "Burger Ayam Crispy Grill/Chop Double", price: "12.00" },
+        { name: "Lamb Grill", price: "22.00" },
+        { name: "Chicken Grill", price: "12.00" },
+        { name: "Chicken Popcorn", price: "5.00" },
+        { name: "Cheezy Fries/Wedges", price: "5.00" },
+        { name: "Beef/Chicken Meatball", price: "6.00" },
+        { name: "Benjo", price: "3.00" },
+        { name: "Sosej Egg Roll", price: "3.00" },
+        { name: "Hotdog Ramly", price: "4.00" },
+        { name: "Nugget Ramly", price: "5.00" },
+        { name: "MK Omelette Special", price: "7.00" },
+        // Drinks
+        { name: "Ayaq Bancuh RM1.00", price: "1.00" },
+        { name: "Ayaq Bancuh RM2.00", price: "2.00" },
+        { name: "Ayaq Bancuh RM3.00", price: "3.00" },
+        { name: "Ayaq Bancuh RM4.00", price: "4.00" },
       ],
     },
     {
-      name: "Tenom Rangers",
-      ...generateRandomLocation(),
-      ...generateRandomScheduleAndOperator(),
+      name: "Raja Gulai Foodtruck",
+      latitude: "6.123553141912142",
+      longitude: "100.34869288853561",
+      schedule: "Sat - Thu, 8.00AM - 1.00PM",
+      operator_name: generateRandomOperator(),
       menu_items: [
-        { name: "Tenom Coffee", price: "5.00" },
-        { name: "Tenom Tea", price: "4.00" },
+        { name: "Gulai Ayam", price: "8.00" },
+        { name: "Gulai Daging", price: "10.00" },
+        { name: "Gulai Ikan", price: "9.00" },
+        { name: "Nasi Putih", price: "2.00" },
       ],
     },
     {
-      name: "Samarqunz FT",
-      ...generateRandomLocation(),
-      ...generateRandomScheduleAndOperator(),
-      menu_items: [{ name: "Nasi Arab Samarkhan", price: "15.00" }],
-    },
-    {
-      name: "Raudhah Fried Chicken",
-      ...generateRandomLocation(),
-      ...generateRandomScheduleAndOperator(),
-      menu_items: [{ name: "Fried Chicken", price: "5.00" }],
-    },
-    {
-      name: "Miecord Foodtruck",
-      ...generateRandomLocation(),
-      ...generateRandomScheduleAndOperator(),
+      name: "Naz's Chicken",
+      latitude: "6.11742422302653",
+      longitude: "100.36554664396253",
+      schedule: "Sat - Thu, 12.00AM - 7.00PM",
+      operator_name: "Naz's Foods Enterprise",
       menu_items: [
-        { name: "Char Kuey Teow", price: "15.00" },
-        { name: "Mee Goreng Hitam", price: "13.00" },
-        { name: "Kuey Teow Goreng", price: "13.00" },
-        { name: "Kuey Teow Kerang", price: "13.00" },
-        { name: "Cendol", price: "13.00" },
+        { name: "Ayam Gunting", price: "10.00" },
+        { name: "Ayam Gunting Cheese Leleh", price: "13.00" },
+        { name: "Ayam Satey", price: "3.00" },
+        { name: "Smoke BBQ Ayam Crispy", price: "9.00" },
+        { name: "Sosej Cheese", price: "6.00" },
+        { name: "Cheezy Wedges", price: "5.00" },
       ],
     },
     {
-      name: "Murtabak Cheese Sijangkang",
-      ...generateRandomLocation(),
-      ...generateRandomScheduleAndOperator(),
+      name: "Food Truck Kacang Rebus dan Buah Berangan",
+      latitude: "6.242540992257719",
+      longitude: "100.42012386730424",
+      schedule: "Sun - Thu, 4.30PM - 10.30PM",
+      operator_name: generateRandomOperator(),
       menu_items: [
-        { name: "Murtabak Biasa", price: "6.00" },
-        { name: "Murtabak Cheese", price: "7.00" },
+        { name: "Kacang Rebus", price: "5.00" },
+        { name: "Buah Berangan", price: "8.00" },
+        { name: "Kacang Kuda", price: "5.50" },
+        { name: "Kacang Putih", price: "4.00" },
+        { name: "Kacang Merah", price: "4.50" },
+        { name: "Kuaci", price: "3.50" },
+        { name: "Jagung Rebus", price: "4.00" },
+        { name: "Ubi Rebus", price: "6.00" },
       ],
     },
     {
-      name: "Koods Pizza",
-      ...generateRandomLocation(),
-      ...generateRandomScheduleAndOperator(),
+      name: "Gombakso 191 Food Truck",
+      latitude: "3.2147262000303227",
+      longitude: "101.7030315006357",
+      schedule: "Wed - Mon, 11.00AM - 7.00PM",
+      operator_name: "As Saifi Food Industries",
       menu_items: [
-        { name: "Wagyu Pizza", price: "56.00" },
-        { name: "Pepperoni Beef Pizza", price: "15.00" },
-      ],
-    },
-    {
-      name: "Kambing Golek Malaysia",
-      ...generateRandomLocation(),
-      ...generateRandomScheduleAndOperator(),
-      menu_items: [{ name: "Kambing", price: "15.00" }],
-    },
-    {
-      name: "Famous Coconut Shake",
-      ...generateRandomLocation(),
-      ...generateRandomScheduleAndOperator(),
-      menu_items: [
-        { name: "Coconut Shake", price: "7.00" },
-        { name: "Mango Milk Shake", price: "8.00" },
-        { name: "Banana Milk Shake", price: "8.00" },
-        { name: "Dragon Fruit Milk Shake", price: "8.00" },
+        { name: "Bakso", price: "8.00" },
+        { name: "Bakso Special", price: "10.00" },
+        { name: "Bakso Beranak", price: "10.00" },
+        { name: "Bakso Mercun", price: "12.00" },
+        { name: "Bakso Tumpang", price: "12.00" },
+        { name: "Bakso Volcano", price: "14.00" },
+        { name: "Set Nasi Ayam Penyet", price: "" },
       ],
     },
   ];
