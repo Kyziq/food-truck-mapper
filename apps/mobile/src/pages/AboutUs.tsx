@@ -31,8 +31,8 @@ const AboutUs: React.FC = () => {
   ];
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>About Devs</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>The Developers</Text>
       {devs.map((dev, index) => (
         <View key={index} style={styles.card}>
           <Image source={dev.image} style={styles.devImage} />
@@ -49,23 +49,19 @@ const AboutUs: React.FC = () => {
           Linking.openURL("https://github.com/Kyziq/food-truck-mapper")
         }
       >
-        GitHub: @food-truck-mapper
+        GitHub Repository: @food-truck-mapper
       </Text>
-      <Text style={styles.footerText}>© 2024 Haziq Khairi</Text>
-      <Text style={styles.license}>
-        Permission is hereby granted, free of charge, to any person obtaining a
-        copy of this software and associated documentation files (the
-        "Software"), to deal in the Software without restriction, including
-        without limitation the rights to use, copy, modify, merge, publish,
-        distribute, sublicense, and/or sell copies of the Software, and to
-        permit persons to whom the Software is furnished to do so, subject to
-        the following conditions:
-      </Text>
-      <Text style={styles.license}>
-        The above copyright notice and this permission notice shall be included
-        in all copies or substantial portions of the Software.
-      </Text>
-    </ScrollView>
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>© 2024 Food Truck Mapper</Text>
+        <Text style={styles.license}>
+          Permission is hereby granted, free of charge, to use, copy, modify,
+          and distribute this software under the MIT License.
+        </Text>
+        <Text style={styles.license}>
+          The software is provided "as is", without warranty of any kind.
+        </Text>
+      </View>
+    </View>
   );
 };
 
@@ -108,20 +104,25 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   devName: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     color: "#444",
     marginBottom: 5,
   },
   devText: {
-    fontSize: 16,
+    fontSize: 14,
     color: "#555",
   },
   link: {
     fontSize: 16,
     color: "blue",
-    marginVertical: 20,
+    marginVertical: 10,
     textDecorationLine: "underline",
+  },
+  footer: {
+    paddingTop: 80,
+    backgroundColor: "#f8f9fa",
+    alignItems: "center",
   },
   footerText: {
     fontSize: 12,
