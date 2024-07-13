@@ -93,11 +93,6 @@ async function seed() {
         { name: "Hotdog Ramly", price: "4.00" },
         { name: "Nugget Ramly", price: "5.00" },
         { name: "MK Omelette Special", price: "7.00" },
-        // Drinks
-        { name: "Ayaq Bancuh RM1.00", price: "1.00" },
-        { name: "Ayaq Bancuh RM2.00", price: "2.00" },
-        { name: "Ayaq Bancuh RM3.00", price: "3.00" },
-        { name: "Ayaq Bancuh RM4.00", price: "4.00" },
       ],
     },
     {
