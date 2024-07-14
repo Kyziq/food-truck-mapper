@@ -2,7 +2,7 @@ import { t } from "elysia";
 
 // ElysiaJS type definitions
 export const FoodTruckSchema = t.Object({
-  id: t.Number(),
+  id: t.Optional(t.Number()),
   name: t.String(),
   latitude: t.String(),
   longitude: t.String(),
@@ -11,7 +11,7 @@ export const FoodTruckSchema = t.Object({
 });
 
 export const MenuItemSchema = t.Object({
-  id: t.Number(),
+  id: t.Optional(t.Number()),
   food_truck_id: t.Number(),
   name: t.String(),
   price: t.String(),
