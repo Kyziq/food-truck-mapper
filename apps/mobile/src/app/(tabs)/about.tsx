@@ -8,31 +8,30 @@ import {
   ScrollView,
 } from "react-native";
 
-const AboutUs: React.FC = () => {
+export default function AboutPage() {
   const devs = [
     {
       name: "MUHAMMAD KHAIRUL HAZIQ BIN MOHAMAD KHAIRI",
       matric: "2023164629",
       class: "RCDCS2515B",
-      image: require("../../assets/haziq.png"),
+      image: require("../../../assets/haziq.png"),
     },
     {
       name: "MUHAMAD ADIB ASYRAAF BIN AZIS",
       matric: "2023126433",
       class: "RCDCS2515B",
-      image: require("../../assets/adib.jpg"),
+      image: require("../../../assets/adib.jpg"),
     },
     {
       name: "MUHAMMAD IQBAL BIN ABDUL RAHIM",
       matric: "2023382949",
       class: "RCDCS2515B",
-      image: require("../../assets/iqbal.jpg"),
+      image: require("../../../assets/iqbal.jpg"),
     },
   ];
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>The Developers</Text>
+    <ScrollView contentContainerStyle={styles.container}>
       {devs.map((dev, index) => (
         <View key={index} style={styles.card}>
           <Image source={dev.image} style={styles.devImage} />
@@ -61,9 +60,9 @@ const AboutUs: React.FC = () => {
           The software is provided "as is", without warranty of any kind.
         </Text>
       </View>
-    </View>
+    </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -72,12 +71,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
     backgroundColor: "#f8f9fa",
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    marginBottom: 20,
-    color: "#333",
   },
   card: {
     backgroundColor: "#fff",
@@ -137,5 +130,3 @@ const styles = StyleSheet.create({
     color: "#888",
   },
 });
-
-export default AboutUs;

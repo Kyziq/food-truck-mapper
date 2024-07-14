@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
-import MapComponent from "../components/MapComponent";
-import LocationPermission from "../components/LocationPermission";
-import { fetchFoodTrucks } from "../utils/api";
-import { LocationCoords, FoodTruck } from "../types";
+import MapComponent from "../../components/MapComponent";
+import LocationPermission from "../../components/LocationPermission";
+import { fetchFoodTrucks } from "../../utils/api";
+import { LocationCoords, FoodTruck } from "../../types";
 
-const MapPage: React.FC = () => {
+export default function MapPage() {
   const [location, setLocation] = useState<LocationCoords | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [foodTrucks, setFoodTrucks] = useState<FoodTruck[]>([]);
@@ -25,7 +25,6 @@ const MapPage: React.FC = () => {
 
   const handleLocationRetrieved = (loc: LocationCoords) => setLocation(loc);
   const handleError = (error: string) => setErrorMsg(error);
-
   return (
     <View style={styles.container}>
       <LocationPermission
@@ -35,12 +34,10 @@ const MapPage: React.FC = () => {
       <MapComponent location={location} foodTrucks={foodTrucks} />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
 });
-
-export default MapPage;

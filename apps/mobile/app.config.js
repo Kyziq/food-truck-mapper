@@ -5,6 +5,7 @@ export default {
   expo: {
     name: "mobile",
     slug: "mobile",
+    scheme: "mobile",
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/icon.png",
@@ -34,6 +35,7 @@ export default {
       permissions: ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"],
     },
     plugins: [
+      "expo-router",
       [
         "expo-location",
         {

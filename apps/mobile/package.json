@@ -1,8 +1,8 @@
 {
   "name": "mobile",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "private": true,
-  "main": "index.js",
+  "main": "expo-router/entry",
   "scripts": {
     "dev": "expo start -c",
     "android": "expo start --android",
@@ -12,13 +12,14 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
     "@gorhom/bottom-sheet": "^4.6.3",
-    "@react-navigation/native-stack": "^6.10.0",
     "expo": "51.0.20",
-    "expo-constants": "^16.0.2",
+    "expo-constants": "~16.0.2",
     "expo-linear-gradient": "^13.0.2",
+    "expo-linking": "~6.3.1",
     "expo-location": "^17.0.1",
+    "expo-router": "~3.5.18",
     "expo-status-bar": "~1.12.1",
-    "react": "18.2.0",
+    "react": "18.3.1",
     "react-native": "0.74.3",
     "react-native-gesture-handler": "~2.16.1",
     "react-native-maps": "1.14.0",
