@@ -1,4 +1,5 @@
 import { Elysia } from "elysia";
+import { swagger } from "@elysiajs/swagger";
 import {
   createFoodTruck,
   getFoodTrucks,
@@ -22,31 +23,77 @@ import {
 const basePath = "/api";
 
 new Elysia()
+  .use(
+    swagger({
+      documentation: {
+        info: {
+          title: "Food Truck Mapper Elysia Documentation",
+          version: "1.0.0",
+        },
+      },
+    })
+  )
   // GET Routes
-  .get(`${basePath}/foodtrucks`, async () => {
-    // Fetch all food trucks
-    return await getFoodTrucks();
-  })
-  .get(`${basePath}/foodtrucks/:id`, async ({ params }) => {
-    // Fetch a specific food truck by ID
-    const foodTruckId = parseInt(params.id, 10);
-    if (isNaN(foodTruckId)) {
-      return new Response("Invalid ID", { status: 400 });
+  .get(
+    `${basePath}/foodtrucks`,
+    async () => {
+      // Fetch all food trucks
+      return await getFoodTrucks();
+    },
+    {
+      detail: {
+        description: "Fetch all food trucks",
+        tags: ["FoodTrucks"],
+      },
     }
-    return await getFoodTruckById(foodTruckId);
-  })
-  .get(`${basePath}/foodtrucks/:id/menuitems`, async ({ params }) => {
-    // Fetch all menu items for a specific food truck by ID
-    const foodTruckId = parseInt(params.id, 10);
-    if (isNaN(foodTruckId)) {
-      return new Response("Invalid ID", { status: 400 });
+  )
+  .get(
+    `${basePath}/foodtrucks/:id`,
+    async ({ params }) => {
+      // Fetch a specific food truck by ID
+      const foodTruckId = parseInt(params.id, 10);
+      if (isNaN(foodTruckId)) {
+        return new Response("Invalid ID", { status: 400 });
+      }
+      return await getFoodTruckById(foodTruckId);
+    },
+    {
+      detail: {
+        description: "Fetch a specific food truck by ID",
+        tags: ["FoodTrucks"],
+      },
     }
-    return await getAllMenuItemsByFoodTruckId(foodTruckId);
-  })
-  .get(`${basePath}/menuitems`, async () => {
-    // Fetch all menu items for all food trucks
-    return await getAllMenuItems();
-  })
+  )
+  .get(
+    `${basePath}/foodtrucks/:id/menuitems`,
+    async ({ params }) => {
+      // Fetch all menu items for a specific food truck by ID
+      const foodTruckId = parseInt(params.id, 10);
+      if (isNaN(foodTruckId)) {
+        return new Response("Invalid ID", { status: 400 });
+      }
+      return await getAllMenuItemsByFoodTruckId(foodTruckId);
+    },
+    {
+      detail: {
+        description: "Fetch all menu items for a specific food truck by ID",
+        tags: ["MenuItems"],
+      },
+    }
+  )
+  .get(
+    `${basePath}/menuitems`,
+    async () => {
+      // Fetch all menu items for all food trucks
+      return await getAllMenuItems();
+    },
+    {
+      detail: {
+        description: "Fetch all menu items for all food trucks",
+        tags: ["MenuItems"],
+      },
+    }
+  )
 
   // POST Routes
   .post(
@@ -57,6 +104,10 @@ new Elysia()
     },
     {
       body: FoodTruckSchema,
+      detail: {
+        description: "Create a new food truck",
+        tags: ["FoodTrucks"],
+      },
     }
   )
   .post(
@@ -67,6 +118,10 @@ new Elysia()
     },
     {
       body: MenuItemSchema,
+      detail: {
+        description: "Create a new menu item",
+        tags: ["MenuItems"],
+      },
     }
   )
 
@@ -83,6 +138,10 @@ new Elysia()
     },
     {
       body: FoodTruckSchema,
+      detail: {
+        description: "Update a specific food truck by ID",
+        tags: ["FoodTrucks"],
+      },
     }
   )
   .put(
@@ -97,27 +156,48 @@ new Elysia()
     },
     {
       body: MenuItemSchema,
+      detail: {
+        description: "Update a specific menu item by ID",
+        tags: ["MenuItems"],
+      },
     }
   )
 
   // DELETE Routes
-  .delete(`${basePath}/foodtrucks/:id`, async ({ params }) => {
-    // Delete a specific food truck by ID
-    const foodTruckId = parseInt(params.id, 10);
-    if (isNaN(foodTruckId)) {
-      return new Response("Invalid ID", { status: 400 });
+  .delete(
+    `${basePath}/foodtrucks/:id`,
+    async ({ params }) => {
+      // Delete a specific food truck by ID
+      const foodTruckId = parseInt(params.id, 10);
+      if (isNaN(foodTruckId)) {
+        return new Response("Invalid ID", { status: 400 });
+      }
+      return await deleteFoodTruck(foodTruckId);
+    },
+    {
+      detail: {
+        description: "Delete a specific food truck by ID",
+        tags: ["FoodTrucks"],
+      },
     }
-    return await deleteFoodTruck(foodTruckId);
-  })
-  .delete(`${basePath}/menuitems/:id`, async ({ params }) => {
-    // Delete a specific menu item by ID
-    const menuItemId = parseInt(params.id, 10);
-    if (isNaN(menuItemId)) {
-      return new Response("Invalid ID", { status: 400 });
+  )
+  .delete(
+    `${basePath}/menuitems/:id`,
+    async ({ params }) => {
+      // Delete a specific menu item by ID
+      const menuItemId = parseInt(params.id, 10);
+      if (isNaN(menuItemId)) {
+        return new Response("Invalid ID", { status: 400 });
+      }
+      return await deleteMenuItem(menuItemId);
+    },
+    {
+      detail: {
+        description: "Delete a specific menu item by ID",
+        tags: ["MenuItems"],
+      },
     }
-    return await deleteMenuItem(menuItemId);
-  })
-
+  )
   // Start the server
   .listen(3234, () => {
     console.log(`Server listening on http://localhost:3234`);
