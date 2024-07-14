@@ -6,7 +6,7 @@ const apiBaseUrl = Constants.expoConfig?.extra?.apiBaseUrl;
 
 // Create an Axios instance with default configurations
 const axiosInstance = axios.create({
-  baseURL: apiBaseUrl,
+  baseURL: `${apiBaseUrl}/api`,
   headers: { "Content-Type": "application/json" },
   timeout: 10000, // 10 seconds timeout
 });

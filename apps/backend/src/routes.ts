@@ -2,8 +2,9 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import { food_trucks, menu_items } from "./schema";
 import { Client } from "pg";
 import { eq } from "drizzle-orm";
+import type { FoodTruckType, MenuItemType } from "./types";
 
-const dbUrl = process.env.DB_URL;
+const dbUrl = process.env["DB_URL"];
 if (!dbUrl) {
   throw new Error("DB_URL is not defined in the environment variables.");
 }
@@ -18,22 +19,6 @@ client.connect().catch((error) => {
 });
 
 const db = drizzle(client);
-
-interface FoodTruck {
-  id?: number;
-  name: string;
-  latitude: string;
-  longitude: string;
-  schedule: string;
-  operator_name: string;
-}
-
-interface MenuItem {
-  id?: number;
-  food_truck_id: number;
-  name: string;
-  price: string;
-}
 
 // Fetch all food trucks
 export async function getFoodTrucks() {
@@ -51,7 +36,7 @@ export async function getFoodTrucks() {
 }
 
 // Create a new food truck
-export async function createFoodTruck(reqBody: FoodTruck) {
+export async function createFoodTruck(reqBody: FoodTruckType) {
   try {
     const newFoodTruck = await db.insert(food_trucks).values(reqBody).execute();
     return new Response(JSON.stringify(newFoodTruck, null, 2), {
@@ -66,7 +51,7 @@ export async function createFoodTruck(reqBody: FoodTruck) {
 }
 
 // Create a new menu item
-export async function createMenuItem(reqBody: MenuItem) {
+export async function createMenuItem(reqBody: MenuItemType) {
   try {
     const newMenuItem = await db.insert(menu_items).values(reqBody).execute();
     return new Response(JSON.stringify(newMenuItem, null, 2), {
@@ -137,7 +122,10 @@ export async function getAllMenuItemsByFoodTruckId(foodTruckId: number) {
 }
 
 // Update a food truck by ID
-export async function updateFoodTruck(id: number, reqBody: Partial<FoodTruck>) {
+export async function updateFoodTruck(
+  id: number,
+  reqBody: Partial<FoodTruckType>
+) {
   try {
     const updatedFoodTruck = await db
       .update(food_trucks)
@@ -156,7 +144,10 @@ export async function updateFoodTruck(id: number, reqBody: Partial<FoodTruck>) {
 }
 
 // Update a menu item by ID
-export async function updateMenuItem(id: number, reqBody: Partial<MenuItem>) {
+export async function updateMenuItem(
+  id: number,
+  reqBody: Partial<MenuItemType>
+) {
   try {
     const updatedMenuItem = await db
       .update(menu_items)
