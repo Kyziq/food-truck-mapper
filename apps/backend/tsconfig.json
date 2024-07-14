@@ -1,4 +1,7 @@
 {
+    // This is based on https://bun.sh/docs/typescript#suggested-compileroptions
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "docs": "https://bun.sh/docs/typescript",
     "compilerOptions": {
         // Enable latest features
         "lib": [
@@ -19,9 +22,14 @@
         "strict": true,
         "skipLibCheck": true,
         "noFallthroughCasesInSwitch": true,
-        // Some stricter flags (disabled by default)
-        "noUnusedLocals": false,
-        "noUnusedParameters": false,
-        "noPropertyAccessFromIndexSignature": false
+        // Some stricter flags
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noPropertyAccessFromIndexSignature": true,
+        // Custom flags
+        "types": [
+            "bun-types"
+        ],
+        "forceConsistentCasingInFileNames": true,
     }
 }
