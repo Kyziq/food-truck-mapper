@@ -6,7 +6,7 @@ import { food_trucks, menu_items } from "./schema";
 dotenv.config();
 
 const client = new Client({
-  connectionString: process.env.DB_URL,
+  connectionString: process.env["DB_URL"],
 });
 
 const db = drizzle(client);
