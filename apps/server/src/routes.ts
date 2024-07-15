@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import type { FoodTruck, MenuItem } from "@types";
 import { db } from "@database/src/db";
-import { food_trucks, menu_items } from "@database/src/schema";
+import { foodTrucks, menuItems } from "@database/src/schema";
 
 // Helper function for consistent response formatting
 function jsonResponse(data: any, status = 200) {
@@ -14,8 +14,11 @@ function jsonResponse(data: any, status = 200) {
 // Food Truck Handlers
 export async function getFoodTrucks() {
   try {
-    const foodTrucks = await db.select().from(food_trucks).execute();
-    console.log(`Successfully fetched ${foodTrucks.length} food trucks`);
+    const foodTrucksData: FoodTruck[] = await db
+      .select()
+      .from(foodTrucks)
+      .execute();
+    console.log(`Successfully fetched ${foodTrucksData.length} food trucks`);
     return jsonResponse(foodTrucks);
   } catch (error) {
     console.error("Error fetching food trucks:", error);
@@ -25,8 +28,8 @@ export async function getFoodTrucks() {
 
 export async function createFoodTruck(reqBody: FoodTruck) {
   try {
-    const newFoodTruck = await db
-      .insert(food_trucks)
+    const newFoodTruck: FoodTruck[] = await db
+      .insert(foodTrucks)
       .values(reqBody)
       .returning()
       .execute();
@@ -44,8 +47,8 @@ export async function getFoodTruckById(id: number) {
   try {
     const result = await db
       .select()
-      .from(food_trucks)
-      .where(eq(food_trucks.id, id))
+      .from(foodTrucks)
+      .where(eq(foodTrucks.foodTruckId, id))
       .execute();
     if (result.length === 0) {
       console.log(`Food truck with ID ${id} not found`);
@@ -61,10 +64,10 @@ export async function getFoodTruckById(id: number) {
 
 export async function updateFoodTruck(id: number, reqBody: Partial<FoodTruck>) {
   try {
-    const updatedFoodTruck = await db
-      .update(food_trucks)
+    const updatedFoodTruck: FoodTruck[] = await db
+      .update(foodTrucks)
       .set(reqBody)
-      .where(eq(food_trucks.id, id))
+      .where(eq(foodTrucks.foodTruckId, id))
       .returning()
       .execute();
     if (updatedFoodTruck.length === 0) {
@@ -82,14 +85,11 @@ export async function updateFoodTruck(id: number, reqBody: Partial<FoodTruck>) {
 export async function deleteFoodTruck(id: number) {
   try {
     // Delete all menu items related to the food truck
-    await db
-      .delete(menu_items)
-      .where(eq(menu_items.food_truck_id, id))
-      .execute();
+    await db.delete(menuItems).where(eq(menuItems.foodTruckId, id)).execute();
     // Delete the food truck
-    const deletedFoodTruck = await db
-      .delete(food_trucks)
-      .where(eq(food_trucks.id, id))
+    const deletedFoodTruck: FoodTruck[] = await db
+      .delete(foodTrucks)
+      .where(eq(foodTrucks.foodTruckId, id))
       .returning()
       .execute();
     if (deletedFoodTruck.length === 0) {
@@ -107,8 +107,11 @@ export async function deleteFoodTruck(id: number) {
 // Menu Item Handlers
 export async function getAllMenuItems() {
   try {
-    const menuItems = await db.select().from(menu_items).execute();
-    console.log(`Successfully fetched ${menuItems.length} menu items`);
+    const menuItemsData: MenuItem[] = await db
+      .select()
+      .from(menuItems)
+      .execute();
+    console.log(`Successfully fetched ${menuItemsData.length} menu items`);
     return jsonResponse(menuItems);
   } catch (error) {
     console.error("Error fetching menu items:", error);
@@ -118,13 +121,13 @@ export async function getAllMenuItems() {
 
 export async function getAllMenuItemsByFoodTruckId(foodTruckId: number) {
   try {
-    const menuItems = await db
+    const menuItemsData: MenuItem[] = await db
       .select()
-      .from(menu_items)
-      .where(eq(menu_items.food_truck_id, foodTruckId))
+      .from(menuItems)
+      .where(eq(menuItems.foodTruckId, foodTruckId))
       .execute();
     console.log(
-      `Successfully fetched ${menuItems.length} menu items for food truck ID: ${foodTruckId}`
+      `Successfully fetched ${menuItemsData.length} menu items for food truck ID: ${foodTruckId}`
     );
     return jsonResponse(menuItems);
   } catch (error) {
@@ -138,8 +141,8 @@ export async function getAllMenuItemsByFoodTruckId(foodTruckId: number) {
 
 export async function createMenuItem(reqBody: MenuItem) {
   try {
-    const newMenuItem = await db
-      .insert(menu_items)
+    const newMenuItem: MenuItem[] = await db
+      .insert(menuItems)
       .values(reqBody)
       .returning()
       .execute();
@@ -156,9 +159,9 @@ export async function createMenuItem(reqBody: MenuItem) {
 export async function updateMenuItem(id: number, reqBody: Partial<MenuItem>) {
   try {
     const updatedMenuItem = await db
-      .update(menu_items)
+      .update(menuItems)
       .set(reqBody)
-      .where(eq(menu_items.id, id))
+      .where(eq(menuItems.menuItemId, id))
       .returning()
       .execute();
     if (updatedMenuItem.length === 0) {
@@ -176,8 +179,8 @@ export async function updateMenuItem(id: number, reqBody: Partial<MenuItem>) {
 export async function deleteMenuItem(id: number) {
   try {
     const deletedMenuItem = await db
-      .delete(menu_items)
-      .where(eq(menu_items.id, id))
+      .delete(menuItems)
+      .where(eq(menuItems.menuItemId, id))
       .returning()
       .execute();
     if (deletedMenuItem.length === 0) {

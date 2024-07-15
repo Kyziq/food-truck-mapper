@@ -88,7 +88,7 @@ const FoodTruckBottomSheet = forwardRef<BottomSheet, FoodTruckBottomSheetProps>(
           </TouchableOpacity>
           <Text style={styles.title}>{foodTruck.name}</Text>
           <Text style={styles.operator}>
-            Operator: {foodTruck.operator_name}
+            Operator: {foodTruck.operatorName}
           </Text>
           <Text style={styles.schedule}>Schedule: {foodTruck.schedule}</Text>
           <Text style={styles.menuTitle}>Menu:</Text>

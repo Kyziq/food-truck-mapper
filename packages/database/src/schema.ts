@@ -1,22 +1,21 @@
 import { pgTable, serial, text, varchar, integer } from "drizzle-orm/pg-core";
 
 // Define the food_trucks table
-export const food_trucks = pgTable("food_trucks", {
-  id: serial("id").primaryKey(),
+export const foodTrucks = pgTable("food_trucks", {
+  foodTruckId: serial("food_truck_id").primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
   latitude: text("latitude").notNull(),
   longitude: text("longitude").notNull(),
   schedule: text("schedule").notNull(),
-  operator_name: varchar("operator_name", { length: 255 }).notNull(),
+  operatorName: varchar("operator_name", { length: 255 }).notNull(),
 });
 
 // Define the menu_items table
-export const menu_items = pgTable("menu_items", {
-  id: serial("id").primaryKey(),
-  food_truck_id: integer("food_truck_id")
-    .references(() => food_trucks.id)
+export const menuItems = pgTable("menu_items", {
+  menuItemId: serial("menu_item_id").primaryKey(),
+  foodTruckId: integer("food_truck_id")
+    .references(() => foodTrucks.foodTruckId)
     .notNull(),
   name: varchar("name", { length: 255 }).notNull(),
-  //   description: text("description").notNull(),
   price: varchar("price", { length: 50 }).notNull(),
 });
