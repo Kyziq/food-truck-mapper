@@ -23,7 +23,7 @@ export default function Welcome() {
             Your Ultimate Street Food Adventure!
           </Text>
           <Image
-            source={require("../../assets/animatedLogo2.gif")}
+            source={require("@root-assets/logo.gif")}
             style={styles.logo}
           />
           <Link href="/(tabs)/map" asChild>
