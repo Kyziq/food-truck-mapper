@@ -1,6 +1,22 @@
 {
-  "extends": "expo/tsconfig.base",
-  "compilerOptions": {
-    "strict": true
-  }
+    "extends": "expo/tsconfig.base",
+    "compilerOptions": {
+        "strict": true,
+        // Custom flags
+        "baseUrl": ".",
+        "paths": {
+            "@root-assets/*": [
+                "../../packages/assets/*"
+            ],
+            "@components/*": [
+                "./src/components/*"
+            ],
+            "@types": [
+                "../../packages/types/index.ts"
+            ],
+            "@utils/*": [
+                "./src/utils/*"
+            ]
+        }
+    },
 }

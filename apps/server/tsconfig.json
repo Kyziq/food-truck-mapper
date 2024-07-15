@@ -31,5 +31,14 @@
             "bun-types"
         ],
         "forceConsistentCasingInFileNames": true,
+        "baseUrl": ".",
+        "paths": {
+            "@database/*": [
+                "../../packages/database/*"
+            ],
+            "@types": [
+                "../../packages/types/index.ts"
+            ]
+        }
     }
 }

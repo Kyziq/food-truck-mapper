@@ -7,13 +7,14 @@ module.exports = function (api) {
       [
         "module-resolver",
         {
-          root: ["./"],
+          root: ["./apps/mobile"], // Root of the mobile app
           alias: {
             "@root-assets": "../../packages/assets",
             "@components": "./src/components",
-            "@app": "./src/apasdp",
+            "@types": "../../packages/types",
             "@utils": "./src/utils",
           },
+          extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
         },
       ],
     ],

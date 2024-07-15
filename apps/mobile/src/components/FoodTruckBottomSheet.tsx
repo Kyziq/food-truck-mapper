@@ -13,8 +13,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
-import { FoodTruck, MenuItem } from "../types";
-import { fetchMenuItems } from "../utils/api";
+import { FoodTruck, MenuItem } from "@types";
+import { fetchMenuItems } from "@utils/api";
 
 type FoodTruckBottomSheetProps = {
   foodTruck: FoodTruck;
@@ -31,7 +31,7 @@ const FoodTruckBottomSheet = forwardRef<BottomSheet, FoodTruckBottomSheetProps>(
 
     useEffect(() => {
       const loadMenuItems = async () => {
-        if (foodTruck) {
+        if (foodTruck?.id !== undefined) {
           setLoading(true);
           try {
             const items = await fetchMenuItems(foodTruck.id);

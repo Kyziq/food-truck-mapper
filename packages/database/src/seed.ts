@@ -1,5 +1,5 @@
 import { food_trucks, menu_items } from "./schema";
-import type { FoodTruckType } from "../../../apps/server/src/types";
+import type { FoodTruck } from "@types";
 import { db, pool } from "./db";
 
 // Function to generate random operator name
@@ -21,7 +21,7 @@ async function seed() {
   pool.connect();
   try {
     // Prepare data for food_trucks insertion
-    const foodTrucksData: Omit<FoodTruckType, "id">[] = [
+    const foodTrucksData: Omit<FoodTruck, "id">[] = [
       {
         name: "MK Muhibbien Kitchen Foodtruck",
         latitude: "6.12805409036393",

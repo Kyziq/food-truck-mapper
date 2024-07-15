@@ -1,6 +1,6 @@
 import axios from "axios";
 import Constants from "expo-constants";
-import { FoodTruck, MenuItem } from "../types";
+import { FoodTruck, MenuItem } from "@types";
 
 const apiBaseUrl = Constants.expoConfig?.extra?.apiBaseUrl;
 

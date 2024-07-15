@@ -13,11 +13,11 @@ import {
   deleteMenuItem,
 } from "./routes";
 import {
+  type FoodTruck,
+  type MenuItem,
   FoodTruckSchema,
   MenuItemSchema,
-  type FoodTruckType,
-  type MenuItemType,
-} from "./types";
+} from "@types";
 
 // Base API path
 const basePath = "/api";
@@ -100,7 +100,7 @@ new Elysia()
     `${basePath}/foodtrucks`,
     async ({ body }) => {
       // Create a new food truck
-      return await createFoodTruck(body as FoodTruckType);
+      return await createFoodTruck(body as FoodTruck);
     },
     {
       body: FoodTruckSchema,
@@ -114,7 +114,7 @@ new Elysia()
     `${basePath}/menuitems`,
     async ({ body }) => {
       // Create a new menu item
-      return await createMenuItem(body as MenuItemType);
+      return await createMenuItem(body as MenuItem);
     },
     {
       body: MenuItemSchema,
@@ -134,7 +134,7 @@ new Elysia()
       if (isNaN(foodTruckId)) {
         return new Response("Invalid ID", { status: 400 });
       }
-      return await updateFoodTruck(foodTruckId, body as FoodTruckType);
+      return await updateFoodTruck(foodTruckId, body as FoodTruck);
     },
     {
       body: FoodTruckSchema,
@@ -152,7 +152,7 @@ new Elysia()
       if (isNaN(menuItemId)) {
         return new Response("Invalid ID", { status: 400 });
       }
-      return await updateMenuItem(menuItemId, body as MenuItemType);
+      return await updateMenuItem(menuItemId, body as MenuItem);
     },
     {
       body: MenuItemSchema,

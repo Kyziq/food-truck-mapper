@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
-import type { FoodTruckType, MenuItemType } from "./types";
-import { db } from "../../../packages/database/src/db";
-import { food_trucks, menu_items } from "../../../packages/database/src/schema";
+import type { FoodTruck, MenuItem } from "@types";
+import { db } from "@database/src/db";
+import { food_trucks, menu_items } from "@database/src/schema";
 
 // Helper function for consistent response formatting
 function jsonResponse(data: any, status = 200) {
@@ -23,7 +23,7 @@ export async function getFoodTrucks() {
   }
 }
 
-export async function createFoodTruck(reqBody: FoodTruckType) {
+export async function createFoodTruck(reqBody: FoodTruck) {
   try {
     const newFoodTruck = await db
       .insert(food_trucks)
@@ -59,10 +59,7 @@ export async function getFoodTruckById(id: number) {
   }
 }
 
-export async function updateFoodTruck(
-  id: number,
-  reqBody: Partial<FoodTruckType>
-) {
+export async function updateFoodTruck(id: number, reqBody: Partial<FoodTruck>) {
   try {
     const updatedFoodTruck = await db
       .update(food_trucks)
@@ -139,7 +136,7 @@ export async function getAllMenuItemsByFoodTruckId(foodTruckId: number) {
   }
 }
 
-export async function createMenuItem(reqBody: MenuItemType) {
+export async function createMenuItem(reqBody: MenuItem) {
   try {
     const newMenuItem = await db
       .insert(menu_items)
@@ -156,10 +153,7 @@ export async function createMenuItem(reqBody: MenuItemType) {
   }
 }
 
-export async function updateMenuItem(
-  id: number,
-  reqBody: Partial<MenuItemType>
-) {
+export async function updateMenuItem(id: number, reqBody: Partial<MenuItem>) {
   try {
     const updatedMenuItem = await db
       .update(menu_items)

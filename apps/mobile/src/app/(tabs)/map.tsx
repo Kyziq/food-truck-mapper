@@ -3,10 +3,10 @@ import { View, StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { BlurView } from "expo-blur";
 import Constants from "expo-constants";
-import MapComponent from "../../components/MapComponent";
-import LocationPermission from "../../components/LocationPermission";
-import { fetchFoodTrucks } from "../../utils/api";
-import { LocationCoords, FoodTruck } from "../../types";
+import MapComponent from "@components/MapComponent";
+import LocationPermission from "@components/LocationPermission";
+import { fetchFoodTrucks } from "@utils/api";
+import { LocationCoords, FoodTruck } from "@types";
 
 export default function MapPage() {
   const [location, setLocation] = useState<LocationCoords | null>(null);

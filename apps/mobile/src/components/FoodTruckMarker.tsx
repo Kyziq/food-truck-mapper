@@ -1,7 +1,7 @@
 import React from "react";
 import { Marker, Callout } from "react-native-maps";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { FoodTruck } from "../types";
+import { FoodTruck } from "@types";
 
 type FoodTruckMarkerProps = FoodTruck & {
   onPress: () => void;

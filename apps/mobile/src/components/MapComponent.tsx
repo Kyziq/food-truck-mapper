@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import MapView, { Marker, Region } from "react-native-maps";
+import { StyleSheet, View } from "react-native";
+import BottomSheet from "@gorhom/bottom-sheet";
 import FoodTruckMarker from "./FoodTruckMarker";
 import FoodTruckBottomSheet from "./FoodTruckBottomSheet";
-import { StyleSheet, View } from "react-native";
-import { FoodTruck } from "../types";
-import BottomSheet from "@gorhom/bottom-sheet";
+import { FoodTruck } from "@types";
 
 type MapComponentProps = {
   location: {
