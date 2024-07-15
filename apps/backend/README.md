@@ -83,6 +83,16 @@ bun dev
 
 ## API Endpoints
 
+### Swagger
+
+You can explore the API endpoints and their documentation using Swagger. To access the Swagger UI, start your server and navigate to:
+
+```plaintext
+/swagger
+```
+
+This will display the Swagger UI, where you can interact with the API and see detailed information about each endpoint.
+
 ### Food Trucks
 
 - **GET** `/foodtrucks`: Retrieve all food trucks.
