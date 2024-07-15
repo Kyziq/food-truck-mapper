@@ -1,30 +1,6 @@
-import { drizzle } from "drizzle-orm/node-postgres";
-import { Client } from "pg";
-import dotenv from "dotenv";
 import { food_trucks, menu_items } from "./schema";
-
-dotenv.config();
-
-const client = new Client({
-  connectionString: process.env["DB_URL"],
-});
-
-const db = drizzle(client);
-
-interface MenuItem {
-  name: string;
-  price: string;
-}
-
-interface FoodTruck {
-  id?: number;
-  name: string;
-  latitude: string;
-  longitude: string;
-  schedule: string;
-  operator_name: string;
-  menu_items: MenuItem[];
-}
+import type { FoodTruckType } from "../../../apps/server/src/types";
+import { db, pool } from "./db";
 
 // Function to generate random operator name
 function generateRandomOperator(): string {
@@ -42,17 +18,50 @@ function generateRandomOperator(): string {
 }
 
 async function seed() {
-  await client.connect();
+  pool.connect();
+  try {
+    // Prepare data for food_trucks insertion
+    const foodTrucksData: Omit<FoodTruckType, "id">[] = [
+      {
+        name: "MK Muhibbien Kitchen Foodtruck",
+        latitude: "6.12805409036393",
+        longitude: "100.35833604654881",
+        schedule: "Sunday - Saturday, 7:30PM - 3.30AM",
+        operator_name: "Nurul Aini binti Ramli",
+      },
+      {
+        name: "Raja Gulai Foodtruck",
+        latitude: "6.123553141912142",
+        longitude: "100.34869288853561",
+        schedule: "Sat - Thu, 8.00AM - 1.00PM",
+        operator_name: generateRandomOperator(),
+      },
+      {
+        name: "Naz's Chicken",
+        latitude: "6.11742422302653",
+        longitude: "100.36554664396253",
+        schedule: "Sat - Thu, 12.00AM - 7.00PM",
+        operator_name: "Naz's Foods Enterprise",
+      },
+      {
+        name: "Food Truck Kacang Rebus dan Buah Berangan",
+        latitude: "6.242540992257719",
+        longitude: "100.42012386730424",
+        schedule: "Sun - Thu, 4.30PM - 10.30PM",
+        operator_name: generateRandomOperator(),
+      },
+      {
+        name: "Gombakso 191 Food Truck",
+        latitude: "3.2147262000303227",
+        longitude: "101.7030315006357",
+        schedule: "Wed - Mon, 11.00AM - 7.00PM",
+        operator_name: "As Saifi Food Industries",
+      },
+    ];
 
-  // Prepare data for food_trucks insertion
-  const foodTrucksData: FoodTruck[] = [
-    {
-      name: "MK Muhibbien Kitchen Foodtruck",
-      latitude: "6.12805409036393",
-      longitude: "100.35833604654881",
-      schedule: "Sunday - Saturday, 7:30PM - 3.30AM",
-      operator_name: "Nurul Aini binti Ramli",
-      menu_items: [
+    // Prepare data for menu_items insertion
+    const menuItemsData = [
+      [
         { name: "Oblong Regular (Ayam)", price: "6.00" },
         { name: "Oblong Special (Ayam)", price: "7.00" },
         { name: "Oblong Double (Ayam)", price: "9.00" },
@@ -94,27 +103,13 @@ async function seed() {
         { name: "Nugget Ramly", price: "5.00" },
         { name: "MK Omelette Special", price: "7.00" },
       ],
-    },
-    {
-      name: "Raja Gulai Foodtruck",
-      latitude: "6.123553141912142",
-      longitude: "100.34869288853561",
-      schedule: "Sat - Thu, 8.00AM - 1.00PM",
-      operator_name: generateRandomOperator(),
-      menu_items: [
+      [
         { name: "Gulai Ayam", price: "8.00" },
         { name: "Gulai Daging", price: "10.00" },
         { name: "Gulai Ikan", price: "9.00" },
         { name: "Nasi Putih", price: "2.00" },
       ],
-    },
-    {
-      name: "Naz's Chicken",
-      latitude: "6.11742422302653",
-      longitude: "100.36554664396253",
-      schedule: "Sat - Thu, 12.00AM - 7.00PM",
-      operator_name: "Naz's Foods Enterprise",
-      menu_items: [
+      [
         { name: "Ayam Gunting", price: "10.00" },
         { name: "Ayam Gunting Cheese Leleh", price: "13.00" },
         { name: "Ayam Satey", price: "3.00" },
@@ -122,14 +117,7 @@ async function seed() {
         { name: "Sosej Cheese", price: "6.00" },
         { name: "Cheezy Wedges", price: "5.00" },
       ],
-    },
-    {
-      name: "Food Truck Kacang Rebus dan Buah Berangan",
-      latitude: "6.242540992257719",
-      longitude: "100.42012386730424",
-      schedule: "Sun - Thu, 4.30PM - 10.30PM",
-      operator_name: generateRandomOperator(),
-      menu_items: [
+      [
         { name: "Kacang Rebus", price: "5.00" },
         { name: "Buah Berangan", price: "8.00" },
         { name: "Kacang Kuda", price: "5.50" },
@@ -139,14 +127,7 @@ async function seed() {
         { name: "Jagung Rebus", price: "4.00" },
         { name: "Ubi Rebus", price: "6.00" },
       ],
-    },
-    {
-      name: "Gombakso 191 Food Truck",
-      latitude: "3.2147262000303227",
-      longitude: "101.7030315006357",
-      schedule: "Wed - Mon, 11.00AM - 7.00PM",
-      operator_name: "As Saifi Food Industries",
-      menu_items: [
+      [
         { name: "Bakso", price: "8.00" },
         { name: "Bakso Special", price: "10.00" },
         { name: "Bakso Beranak", price: "10.00" },
@@ -155,41 +136,35 @@ async function seed() {
         { name: "Bakso Volcano", price: "14.00" },
         { name: "Set Nasi Ayam Penyet", price: "10.00" },
       ],
-    },
-  ];
+    ];
 
-  // Insert data into the food_trucks table and get the inserted IDs
-  const insertedFoodTrucks = await db
-    .insert(food_trucks)
-    .values(
-      foodTrucksData.map((truck) => ({
-        name: truck.name,
-        latitude: truck.latitude,
-        longitude: truck.longitude,
-        schedule: truck.schedule,
-        operator_name: truck.operator_name,
-      }))
-    )
-    .returning();
+    // Insert data into the food_trucks table
+    const insertedFoodTrucks = await db
+      .insert(food_trucks)
+      .values(foodTrucksData)
+      .returning();
 
-  // Insert data into the menu_items table for each food truck using the predefined menu items
-  for (let i = 0; i < insertedFoodTrucks.length; i++) {
-    const truck = insertedFoodTrucks[i];
-    const items = foodTrucksData[i].menu_items;
-    if (items) {
-      const menuItems = items.map((item) => ({
-        food_truck_id: truck.id!,
-        name: item.name,
-        price: item.price,
-      }));
-      await db.insert(menu_items).values(menuItems);
+    // Insert data into the menu_items table for each food truck using the predefined menu items
+    for (let i = 0; i < insertedFoodTrucks.length; i++) {
+      const truck = insertedFoodTrucks[i];
+      const items = menuItemsData[i];
+      if (items) {
+        const menuItems = items.map((item) => ({
+          food_truck_id: truck.id!,
+          name: item.name,
+          price: item.price,
+        }));
+        await db.insert(menu_items).values(menuItems);
+      }
     }
-  }
 
-  await client.end();
+    console.log("Seeding completed successfully");
+  } catch (err) {
+    console.error("Seeding error:", err);
+  } finally {
+    // Close the pool when done
+    pool.end();
+  }
 }
 
-seed().catch((err) => {
-  console.error("Seeding error:", err);
-  client.end();
-});
+seed();

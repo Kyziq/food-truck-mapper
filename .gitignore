@@ -11,4 +11,4 @@ bun.lockb
 .env.*.local
 
 # Turbo repo cache
-.turbo/
+.turbo

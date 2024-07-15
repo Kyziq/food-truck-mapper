@@ -1,0 +1,12 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "bun run --watch src/server.ts"
+  },
+  "dependencies": {
+    "@elysiajs/swagger": "^1.0.5",
+    "elysia": "latest",
+    "database": "workspace:*"
+  }
+}

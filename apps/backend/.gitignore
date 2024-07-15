@@ -1,9 +1,0 @@
-# TypeScript build output
-dist/
-build/
-
-# Drizzle ORM files
-drizzle/
-
-# Environment variables
-.env

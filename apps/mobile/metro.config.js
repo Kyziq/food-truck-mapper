@@ -4,7 +4,7 @@ const path = require("path");
 const dotenv = require("dotenv");
 
 // Load environment variables from .env file
-dotenv.config();
+dotenv.config({ path: "../../.env" });
 
 // Find the workspace root, this can be replaced with `find-yarn-workspace-root`
 const workspaceRoot = path.resolve(__dirname, "../..");
