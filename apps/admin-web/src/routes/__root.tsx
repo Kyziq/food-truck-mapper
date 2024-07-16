@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -13,9 +14,22 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ClipboardList, LayoutDashboard, Truck } from "lucide-react";
 import logo from "@root-assets/logo.svg";
+import { fetchFoodTrucksCount } from "@/lib/api";
 
-export const Route = createRootRoute({
-  component: () => (
+const RootComponent: React.FC = () => {
+  const [foodTrucksCount, setFoodTrucksCount] = useState<number>(0);
+
+  useEffect(() => {
+    const getFoodTrucksCount = async () => {
+      const count = await fetchFoodTrucksCount();
+      console.log(count);
+      setFoodTrucksCount(count);
+    };
+
+    getFoodTrucksCount();
+  }, []);
+
+  return (
     <>
       <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
         <div className="hidden border-r bg-muted/40 md:block">
@@ -44,7 +58,7 @@ export const Route = createRootRoute({
                   <Truck className="h-4 w-4" />
                   Food Trucks
                   <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                    1
+                    {foodTrucksCount}
                   </Badge>
                 </Link>
                 <Link
@@ -95,5 +109,9 @@ export const Route = createRootRoute({
       <Outlet />
       <TanStackRouterDevtools />
     </>
-  ),
+  );
+};
+
+export const Route = createRootRoute({
+  component: RootComponent,
 });

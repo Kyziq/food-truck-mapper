@@ -5,7 +5,9 @@ export const Route = createLazyFileRoute("/menuitems")({
 });
 
 function MenuItems() {
-  <div className="p-2">
-    <h3>Menu Items!</h3>
-  </div>;
+  return (
+    <div className="p-2">
+      <h3>Menu Items!</h3>
+    </div>
+  );
 }
