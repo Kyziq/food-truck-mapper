@@ -26,11 +26,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
-import { Edit, Plus, Trash } from "lucide-react";
-import { fetchFoodTrucks, createFoodTruck } from "@/lib/api";
 import { LoadingSpinner } from "@/components/ui/loading";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
+import { Edit, Plus, Trash } from "lucide-react";
+import { fetchFoodTrucks, createFoodTruck, deleteFoodTruck } from "@/lib/api";
 
 export const Route = createLazyFileRoute("/foodtrucks")({
   component: FoodTrucks,
@@ -60,22 +60,22 @@ function FoodTrucks() {
     queryFn: fetchFoodTrucks,
   });
 
-  const mutation = useMutation({
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setNewFoodTruck({ ...newFoodTruck, [name]: value });
+  };
+
+  const createMutation = useMutation({
     mutationFn: createFoodTruck,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["foodTrucks"] });
     },
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setNewFoodTruck({ ...newFoodTruck, [name]: value });
-  };
-
   const handleCreateFoodTruck = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await mutation.mutateAsync(newFoodTruck);
+      await createMutation.mutateAsync(newFoodTruck);
       toast({
         variant: "success",
         title: "Success",
@@ -88,6 +88,33 @@ function FoodTrucks() {
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
         description: "Failed to create food truck.",
+        duration: 3000,
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+    }
+  };
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteFoodTruck,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["foodTrucks"] });
+    },
+  });
+
+  const handleDeleteFoodTruck = async (foodTruckId: number) => {
+    try {
+      await deleteMutation.mutateAsync(foodTruckId);
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Food truck deleted successfully.",
+        duration: 3000,
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "Failed to delete food truck.",
         duration: 3000,
         action: <ToastAction altText="Try again">Try again</ToastAction>,
       });
@@ -226,6 +253,8 @@ function FoodTrucks() {
                       size="sm"
                       variant="outline"
                       className="text-red-600"
+                      onClick={() => handleDeleteFoodTruck(truck.foodTruckId)}
+                      disabled={deleteMutation.isPending}
                     >
                       <Trash className="h-4 w-4" />
                     </Button>

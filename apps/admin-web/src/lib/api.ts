@@ -20,7 +20,7 @@ export const fetchFoodTrucks = async (): Promise<any[]> => {
     return response.data;
   } catch (error) {
     console.error("Failed to fetch food trucks:", error);
-    return [];
+    throw error;
   }
 };
 
@@ -31,5 +31,17 @@ export const createFoodTruck = async (foodTruck: any): Promise<void> => {
     console.log("Created food truck:", response.data);
   } catch (error) {
     console.error("Failed to create food truck:", error);
+    throw error;
+  }
+};
+
+// Delete a food truck
+export const deleteFoodTruck = async (foodTruckId: number): Promise<void> => {
+  try {
+    const response = await axiosInstance.delete(`/foodtrucks/${foodTruckId}`);
+    console.log("Deleted food truck:", response.data);
+  } catch (error) {
+    console.error("Failed to delete food truck:", error);
+    throw error;
   }
 };
