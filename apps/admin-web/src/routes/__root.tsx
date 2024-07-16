@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -15,19 +14,13 @@ import {
 import { ClipboardList, LayoutDashboard, Truck } from "lucide-react";
 import logo from "@root-assets/logo.svg";
 import { fetchFoodTrucksCount } from "@/lib/api";
+import { useQuery } from "@tanstack/react-query";
 
-const RootComponent: React.FC = () => {
-  const [foodTrucksCount, setFoodTrucksCount] = useState<number>(0);
-
-  useEffect(() => {
-    const getFoodTrucksCount = async () => {
-      const count = await fetchFoodTrucksCount();
-      console.log(count);
-      setFoodTrucksCount(count);
-    };
-
-    getFoodTrucksCount();
-  }, []);
+const RootComponent = () => {
+  const { data: foodTrucksCount = 0 } = useQuery({
+    queryKey: ["foodTrucksCount"],
+    queryFn: fetchFoodTrucksCount,
+  });
 
   return (
     <>
