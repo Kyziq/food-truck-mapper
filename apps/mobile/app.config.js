@@ -46,7 +46,7 @@ export default {
       ],
     ],
     extra: {
-      apiBaseUrl: process.env.REACT_APP_API_BASE_URL || "",
+      apiBaseUrl: process.env.API_BASE_URL,
     },
   },
 };

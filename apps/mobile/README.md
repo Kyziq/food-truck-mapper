@@ -6,7 +6,7 @@ Edit the `.env` file and add your Google Maps API key, API base URL, and server 
 
 ```env
 GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
-REACT_APP_API_BASE_URL=http://your_api_base_url_here:your_server_port
+API_BASE_URL=http://your_api_base_url_here:your_server_port
 ```
 
 ## Running the App
