@@ -6,7 +6,7 @@ export type LocationCoords = {
 };
 
 export type FoodTruck = {
-  id?: number;
+  foodTruckId?: number;
   name: string;
   latitude: string;
   longitude: string;
@@ -15,7 +15,7 @@ export type FoodTruck = {
 };
 
 export type MenuItem = {
-  id?: number;
+  menuItemId?: number;
   foodTruckId: number;
   name: string;
   price: string;
@@ -23,7 +23,7 @@ export type MenuItem = {
 
 // ElysiaJS type definitions for server
 export const FoodTruckSchema = t.Object({
-  id: t.Optional(t.Number()),
+  foodTruckId: t.Optional(t.Number()),
   name: t.String(),
   latitude: t.String(),
   longitude: t.String(),
@@ -32,7 +32,7 @@ export const FoodTruckSchema = t.Object({
 });
 
 export const MenuItemSchema = t.Object({
-  id: t.Optional(t.Number()),
+  menuItemId: t.Optional(t.Number()),
   foodTruckId: t.Number(),
   name: t.String(),
   price: t.String(),

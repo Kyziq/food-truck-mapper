@@ -65,7 +65,7 @@ const MapComponent = ({ location, foodTrucks }: MapComponentProps) => {
         )}
         {foodTrucks.map((truck) => (
           <FoodTruckMarker
-            key={truck.id}
+            key={truck.foodTruckId}
             {...truck}
             onPress={() => handleMarkerPress(truck)}
           />

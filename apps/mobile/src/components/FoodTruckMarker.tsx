@@ -8,7 +8,7 @@ type FoodTruckMarkerProps = FoodTruck & {
 };
 
 const FoodTruckMarker = (props: FoodTruckMarkerProps) => {
-  const { id, name, latitude, longitude, schedule, onPress } = props;
+  const { foodTruckId, name, latitude, longitude, schedule, onPress } = props;
 
   return (
     <Marker

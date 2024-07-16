@@ -31,10 +31,10 @@ const FoodTruckBottomSheet = forwardRef<BottomSheet, FoodTruckBottomSheetProps>(
 
     useEffect(() => {
       const loadMenuItems = async () => {
-        if (foodTruck?.id !== undefined) {
+        if (foodTruck?.foodTruckId !== undefined) {
           setLoading(true);
           try {
-            const items = await fetchMenuItems(foodTruck.id);
+            const items = await fetchMenuItems(foodTruck.foodTruckId);
             setMenuItems(items);
           } catch (error) {
             console.error("Failed to fetch menu items:", error);

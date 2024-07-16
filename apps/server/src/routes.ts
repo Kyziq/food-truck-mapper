@@ -31,7 +31,7 @@ export async function createFoodTruck(reqBody: FoodTruck) {
       .returning()
       .execute();
     console.log(
-      `Successfully created new food truck with ID: ${newFoodTruck[0].id}`
+      `Successfully created new food truck with ID: ${newFoodTruck[0].foodTruckId}`
     );
     return jsonResponse(newFoodTruck[0], 201);
   } catch (error) {
@@ -126,7 +126,7 @@ export async function getAllMenuItemsByFoodTruckId(foodTruckId: number) {
     console.log(
       `Successfully fetched ${menuItemsData.length} menu items for food truck ID: ${foodTruckId}`
     );
-    return jsonResponse(menuItems);
+    return jsonResponse(menuItemsData);
   } catch (error) {
     console.error(
       `Error fetching menu items for food truck ID ${foodTruckId}:`,
@@ -144,7 +144,7 @@ export async function createMenuItem(reqBody: MenuItem) {
       .returning()
       .execute();
     console.log(
-      `Successfully created new menu item with ID: ${newMenuItem[0].id}`
+      `Successfully created new menu item with ID: ${newMenuItem[0].menuItemId}`
     );
     return jsonResponse(newMenuItem[0], 201);
   } catch (error) {
