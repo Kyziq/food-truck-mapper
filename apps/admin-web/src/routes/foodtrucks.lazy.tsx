@@ -29,8 +29,13 @@ import { Input } from "@/components/ui/input";
 import { LoadingSpinner } from "@/components/ui/loading";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
-import { Edit, Plus, Trash } from "lucide-react";
-import { fetchFoodTrucks, createFoodTruck, deleteFoodTruck } from "@/lib/api";
+import { Check, Edit, Plus, Trash, X } from "lucide-react";
+import {
+  fetchFoodTrucks,
+  createFoodTruck,
+  deleteFoodTruck,
+  updateFoodTruck,
+} from "@/lib/api";
 
 export const Route = createLazyFileRoute("/foodtrucks")({
   component: FoodTrucks,
@@ -50,6 +55,10 @@ function FoodTrucks() {
     schedule: "",
   };
   const [newFoodTruck, setNewFoodTruck] = useState(initialFoodTruckState);
+  const [editingFoodTruckId, setEditingFoodTruckId] = useState<number | null>(
+    null
+  );
+  const [editFoodTruck, setEditFoodTruck] = useState(initialFoodTruckState);
 
   const {
     data: foodTrucks = [],
@@ -60,9 +69,12 @@ function FoodTrucks() {
     queryFn: fetchFoodTrucks,
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setState: React.Dispatch<React.SetStateAction<typeof initialFoodTruckState>>
+  ) => {
     const { name, value } = e.target;
-    setNewFoodTruck({ ...newFoodTruck, [name]: value });
+    setState((prevState) => ({ ...prevState, [name]: value }));
   };
 
   const createMutation = useMutation({
@@ -121,6 +133,45 @@ function FoodTrucks() {
     }
   };
 
+  const handleEditFoodTruck = (truck: any) => {
+    setEditingFoodTruckId(truck.foodTruckId);
+    setEditFoodTruck(truck);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingFoodTruckId(null);
+    setEditFoodTruck(initialFoodTruckState);
+  };
+
+  const handleSaveEdit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await updateMutation.mutateAsync(editFoodTruck);
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Food truck updated successfully.",
+        duration: 3000,
+      });
+      setEditingFoodTruckId(null);
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "Failed to update food truck.",
+        duration: 3000,
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+    }
+  };
+
+  const updateMutation = useMutation({
+    mutationFn: updateFoodTruck,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["foodTrucks"] });
+    },
+  });
+
   if (isLoading) return <LoadingSpinner className="spinner-class" size={48} />;
   if (error) return <div>Error loading food trucks</div>;
 
@@ -160,7 +211,7 @@ function FoodTrucks() {
                     id="name"
                     name="name"
                     value={newFoodTruck.name}
-                    onChange={handleInputChange}
+                    onChange={(e) => handleInputChange(e, setNewFoodTruck)}
                     required
                   />
                 </div>
@@ -170,7 +221,7 @@ function FoodTrucks() {
                     id="operatorName"
                     name="operatorName"
                     value={newFoodTruck.operatorName}
-                    onChange={handleInputChange}
+                    onChange={(e) => handleInputChange(e, setNewFoodTruck)}
                     required
                   />
                 </div>
@@ -182,7 +233,7 @@ function FoodTrucks() {
                       name="latitude"
                       type="number"
                       value={newFoodTruck.latitude}
-                      onChange={handleInputChange}
+                      onChange={(e) => handleInputChange(e, setNewFoodTruck)}
                       required
                     />
                   </div>
@@ -193,7 +244,7 @@ function FoodTrucks() {
                       name="longitude"
                       type="number"
                       value={newFoodTruck.longitude}
-                      onChange={handleInputChange}
+                      onChange={(e) => handleInputChange(e, setNewFoodTruck)}
                       required
                     />
                   </div>
@@ -204,7 +255,7 @@ function FoodTrucks() {
                     id="schedule"
                     name="schedule"
                     value={newFoodTruck.schedule}
-                    onChange={handleInputChange}
+                    onChange={(e) => handleInputChange(e, setNewFoodTruck)}
                     required
                   />
                 </div>
@@ -227,38 +278,127 @@ function FoodTrucks() {
             </TableHeader>
             <TableBody>
               {foodTrucks.map((truck) => (
-                <TableRow>
-                  <TableCell className="py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">
-                      {truck.name}
-                    </div>
-                  </TableCell>
-                  <TableCell className="py-4 whitespace-nowrap">
-                    {truck.latitude}
-                  </TableCell>
-                  <TableCell className="py-4 whitespace-nowrap">
-                    {truck.longitude}
-                  </TableCell>
-                  <TableCell className="py-4 whitespace-nowrap">
-                    {truck.schedule}
-                  </TableCell>
-                  <TableCell className="py-4 whitespace-nowrap">
-                    {truck.operatorName}
-                  </TableCell>
-                  <TableCell className="py-4 whitespace-nowrap text-right">
-                    <Button size="sm" variant="outline" className="mr-2">
-                      <Edit className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="text-red-600"
-                      onClick={() => handleDeleteFoodTruck(truck.foodTruckId)}
-                      disabled={deleteMutation.isPending}
-                    >
-                      <Trash className="h-4 w-4" />
-                    </Button>
-                  </TableCell>
+                <TableRow key={truck.foodTruckId}>
+                  {editingFoodTruckId === truck.foodTruckId ? (
+                    <>
+                      <TableCell className="py-4 whitespace-nowrap">
+                        <Input
+                          id="name"
+                          name="name"
+                          value={editFoodTruck.name}
+                          onChange={(e) =>
+                            handleInputChange(e, setEditFoodTruck)
+                          }
+                          required
+                        />
+                      </TableCell>
+                      <TableCell className="py-4 whitespace-nowrap">
+                        <Input
+                          id="latitude"
+                          name="latitude"
+                          type="number"
+                          value={editFoodTruck.latitude}
+                          onChange={(e) =>
+                            handleInputChange(e, setEditFoodTruck)
+                          }
+                          required
+                        />
+                      </TableCell>
+                      <TableCell className="py-4 whitespace-nowrap">
+                        <Input
+                          id="longitude"
+                          name="longitude"
+                          type="number"
+                          value={editFoodTruck.longitude}
+                          onChange={(e) =>
+                            handleInputChange(e, setEditFoodTruck)
+                          }
+                          required
+                        />
+                      </TableCell>
+                      <TableCell className="py-4 whitespace-nowrap">
+                        <Input
+                          id="schedule"
+                          name="schedule"
+                          value={editFoodTruck.schedule}
+                          onChange={(e) =>
+                            handleInputChange(e, setEditFoodTruck)
+                          }
+                          required
+                        />
+                      </TableCell>
+                      <TableCell className="py-4 whitespace-nowrap">
+                        <Input
+                          id="operatorName"
+                          name="operatorName"
+                          value={editFoodTruck.operatorName}
+                          onChange={(e) =>
+                            handleInputChange(e, setEditFoodTruck)
+                          }
+                          required
+                        />
+                      </TableCell>
+                      <TableCell className="py-4 whitespace-nowrap text-right">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="mr-2"
+                          onClick={handleSaveEdit}
+                        >
+                          <Check className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="text-red-600"
+                          onClick={handleCancelEdit}
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </TableCell>
+                    </>
+                  ) : (
+                    <>
+                      <TableCell className="py-4 whitespace-nowrap">
+                        <div className="text-sm font-medium text-gray-900">
+                          {truck.name}
+                        </div>
+                      </TableCell>
+                      <TableCell className="py-4 whitespace-nowrap">
+                        {truck.latitude}
+                      </TableCell>
+                      <TableCell className="py-4 whitespace-nowrap">
+                        {truck.longitude}
+                      </TableCell>
+                      <TableCell className="py-4 whitespace-nowrap">
+                        {truck.schedule}
+                      </TableCell>
+                      <TableCell className="py-4 whitespace-nowrap">
+                        {truck.operatorName}
+                      </TableCell>
+                      <TableCell className="py-4 whitespace-nowrap text-right">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="mr-2"
+                          onClick={() => handleEditFoodTruck(truck)}
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="text-red-600"
+                          onClick={() =>
+                            handleDeleteFoodTruck(truck.foodTruckId)
+                          }
+                          disabled={deleteMutation.isPending}
+                        >
+                          <Trash className="h-4 w-4" />
+                        </Button>
+                      </TableCell>
+                    </>
+                  )}
                 </TableRow>
               ))}
             </TableBody>

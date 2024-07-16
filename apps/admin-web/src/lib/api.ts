@@ -45,3 +45,17 @@ export const deleteFoodTruck = async (foodTruckId: number): Promise<void> => {
     throw error;
   }
 };
+
+// Update a food truck
+export const updateFoodTruck = async (foodTruck: any): Promise<void> => {
+  try {
+    const response = await axiosInstance.put(
+      `/foodtrucks/${foodTruck.foodTruckId}`,
+      foodTruck
+    );
+    console.log("Updated food truck:", response.data);
+  } catch (error) {
+    console.error("Failed to update food truck:", error);
+    throw error;
+  }
+};
