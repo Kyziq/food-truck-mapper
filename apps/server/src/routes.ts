@@ -14,12 +14,9 @@ function jsonResponse(data: any, status = 200) {
 // Food Truck Handlers
 export async function getFoodTrucks() {
   try {
-    const foodTrucksData: FoodTruck[] = await db
-      .select()
-      .from(foodTrucks)
-      .execute();
+    const foodTrucksData = await db.select().from(foodTrucks).execute();
     console.log(`Successfully fetched ${foodTrucksData.length} food trucks`);
-    return jsonResponse(foodTrucks);
+    return jsonResponse(foodTrucksData);
   } catch (error) {
     console.error("Error fetching food trucks:", error);
     return jsonResponse({ error: "Internal Server Error" }, 500);
@@ -112,7 +109,7 @@ export async function getAllMenuItems() {
       .from(menuItems)
       .execute();
     console.log(`Successfully fetched ${menuItemsData.length} menu items`);
-    return jsonResponse(menuItems);
+    return jsonResponse(menuItemsData);
   } catch (error) {
     console.error("Error fetching menu items:", error);
     return jsonResponse({ error: "Internal Server Error" }, 500);

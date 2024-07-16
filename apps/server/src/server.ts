@@ -1,4 +1,5 @@
 import { Elysia } from "elysia";
+import { cors } from "@elysiajs/cors";
 import { swagger } from "@elysiajs/swagger";
 import {
   createFoodTruck,
@@ -23,6 +24,7 @@ import {
 const basePath = "/api";
 
 new Elysia()
+  .use(cors())
   .use(
     swagger({
       documentation: {
@@ -43,7 +45,7 @@ new Elysia()
     {
       detail: {
         description: "Fetch all food trucks",
-        tags: ["FoodTrucks"],
+        tags: ["Food Trucks"],
       },
     }
   )
@@ -60,7 +62,7 @@ new Elysia()
     {
       detail: {
         description: "Fetch a specific food truck by ID",
-        tags: ["FoodTrucks"],
+        tags: ["Food Trucks"],
       },
     }
   )
@@ -77,7 +79,7 @@ new Elysia()
     {
       detail: {
         description: "Fetch all menu items for a specific food truck by ID",
-        tags: ["MenuItems"],
+        tags: ["Menu Items"],
       },
     }
   )
@@ -90,7 +92,7 @@ new Elysia()
     {
       detail: {
         description: "Fetch all menu items for all food trucks",
-        tags: ["MenuItems"],
+        tags: ["Menu Items"],
       },
     }
   )
@@ -106,7 +108,7 @@ new Elysia()
       body: FoodTruckSchema,
       detail: {
         description: "Create a new food truck",
-        tags: ["FoodTrucks"],
+        tags: ["Food Trucks"],
       },
     }
   )
@@ -120,7 +122,7 @@ new Elysia()
       body: MenuItemSchema,
       detail: {
         description: "Create a new menu item",
-        tags: ["MenuItems"],
+        tags: ["Menu Items"],
       },
     }
   )
@@ -140,7 +142,7 @@ new Elysia()
       body: FoodTruckSchema,
       detail: {
         description: "Update a specific food truck by ID",
-        tags: ["FoodTrucks"],
+        tags: ["Food Trucks"],
       },
     }
   )
@@ -158,7 +160,7 @@ new Elysia()
       body: MenuItemSchema,
       detail: {
         description: "Update a specific menu item by ID",
-        tags: ["MenuItems"],
+        tags: ["Menu Items"],
       },
     }
   )
@@ -177,7 +179,7 @@ new Elysia()
     {
       detail: {
         description: "Delete a specific food truck by ID",
-        tags: ["FoodTrucks"],
+        tags: ["Food Trucks"],
       },
     }
   )
@@ -194,7 +196,7 @@ new Elysia()
     {
       detail: {
         description: "Delete a specific menu item by ID",
-        tags: ["MenuItems"],
+        tags: ["Menu Items"],
       },
     }
   )
