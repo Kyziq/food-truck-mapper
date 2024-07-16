@@ -30,8 +30,8 @@ const RootComponent = () => {
           <div className="flex h-full max-h-screen flex-col gap-2">
             <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
               <Link href="/" className="flex items-center gap-2 font-semibold">
-                <img src={logo} alt="Food Truck Finder" className="h-6 w-6" />
-                <span className="">Food Truck Finder</span>
+                <img src={logo} alt="Food Truck Mapper" className="h-6 w-6" />
+                <span className="">Food Truck Mapper</span>
               </Link>
             </div>
             <div className="flex-1">
