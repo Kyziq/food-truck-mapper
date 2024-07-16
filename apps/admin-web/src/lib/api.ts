@@ -9,6 +9,9 @@ const axiosInstance = axios.create({
   timeout: 10000, // 10 seconds timeout
 });
 
+// Utility function to introduce a delay
+// const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 // Fetch all food trucks
 export const fetchFoodTrucks = async (): Promise<any[]> => {
   try {
@@ -18,5 +21,15 @@ export const fetchFoodTrucks = async (): Promise<any[]> => {
   } catch (error) {
     console.error("Failed to fetch food trucks:", error);
     return [];
+  }
+};
+
+// Create a new food truck
+export const createFoodTruck = async (foodTruck: any): Promise<void> => {
+  try {
+    const response = await axiosInstance.post("/foodtrucks", foodTruck);
+    console.log("Created food truck:", response.data);
+  } catch (error) {
+    console.error("Failed to create food truck:", error);
   }
 };
