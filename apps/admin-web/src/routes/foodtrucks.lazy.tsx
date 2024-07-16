@@ -36,6 +36,12 @@ import {
   deleteFoodTruck,
   updateFoodTruck,
 } from "@/lib/api";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export const Route = createLazyFileRoute("/foodtrucks")({
   component: FoodTrucks,
@@ -339,22 +345,39 @@ function FoodTrucks() {
                         />
                       </TableCell>
                       <TableCell className="py-4 whitespace-nowrap text-right">
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="mr-2"
-                          onClick={handleSaveEdit}
-                        >
-                          <Check className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="text-red-600"
-                          onClick={handleCancelEdit}
-                        >
-                          <X className="h-4 w-4" />
-                        </Button>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="mr-2"
+                                onClick={handleSaveEdit}
+                              >
+                                <Check className="h-4 w-4" />
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Save Data</p>
+                            </TooltipContent>
+                          </Tooltip>
+
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="text-red-600"
+                                onClick={handleCancelEdit}
+                              >
+                                <X className="h-4 w-4" />
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Cancel</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       </TableCell>
                     </>
                   ) : (
@@ -377,25 +400,42 @@ function FoodTrucks() {
                         {truck.operatorName}
                       </TableCell>
                       <TableCell className="py-4 whitespace-nowrap text-right">
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="mr-2"
-                          onClick={() => handleEditFoodTruck(truck)}
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="text-red-600"
-                          onClick={() =>
-                            handleDeleteFoodTruck(truck.foodTruckId)
-                          }
-                          disabled={deleteMutation.isPending}
-                        >
-                          <Trash className="h-4 w-4" />
-                        </Button>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="mr-2"
+                                onClick={() => handleEditFoodTruck(truck)}
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Edit Data</p>
+                            </TooltipContent>
+                          </Tooltip>
+
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="text-red-600"
+                                onClick={() =>
+                                  handleDeleteFoodTruck(truck.foodTruckId)
+                                }
+                                disabled={deleteMutation.isPending}
+                              >
+                                <Trash className="h-4 w-4" />
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Delete Data</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       </TableCell>
                     </>
                   )}
