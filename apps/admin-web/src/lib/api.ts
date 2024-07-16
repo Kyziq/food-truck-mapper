@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const apiBaseUrl = import.meta.env.API_BASE_URL;
-console.log("API base URL:", apiBaseUrl); // Verify this in the browser console
 
 // Create an Axios instance with default configurations
 const axiosInstance = axios.create({
@@ -10,7 +9,6 @@ const axiosInstance = axios.create({
   timeout: 10000, // 10 seconds timeout
 });
 
-console.log("API base URL:", apiBaseUrl);
 // Fetch the number of food trucks
 export const fetchFoodTrucksCount = async (): Promise<number> => {
   try {
