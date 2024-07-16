@@ -42,6 +42,15 @@ function FoodTrucks() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { toast } = useToast();
 
+  const initialFoodTruckState = {
+    name: "",
+    operatorName: "",
+    latitude: "",
+    longitude: "",
+    schedule: "",
+  };
+  const [newFoodTruck, setNewFoodTruck] = useState(initialFoodTruckState);
+
   const {
     data: foodTrucks = [],
     isLoading,
@@ -56,14 +65,6 @@ function FoodTrucks() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["foodTrucks"] });
     },
-  });
-
-  const [newFoodTruck, setNewFoodTruck] = useState({
-    name: "",
-    operatorName: "",
-    latitude: "",
-    longitude: "",
-    schedule: "",
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,7 +107,15 @@ function FoodTrucks() {
               Manage all the food trucks and their details.
             </CardDescription>
           </div>
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <Dialog
+            open={isDialogOpen}
+            onOpenChange={(open) => {
+              setIsDialogOpen(open);
+              if (open) {
+                setNewFoodTruck(initialFoodTruckState);
+              }
+            }}
+          >
             <DialogTrigger asChild>
               <Button size="sm" className="ml-auto gap-1">
                 Create Food Truck
@@ -172,9 +181,7 @@ function FoodTrucks() {
                     required
                   />
                 </div>
-                <Button type="submit" onClick={() => setIsDialogOpen(true)}>
-                  Create Food Truck
-                </Button>
+                <Button type="submit">Create Food Truck</Button>
               </form>
             </DialogContent>
           </Dialog>
