@@ -13,14 +13,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ClipboardList, LayoutDashboard, Truck } from "lucide-react";
 import logo from "@root-assets/logo.svg";
-import { fetchFoodTrucksCount } from "@/lib/api";
+import { fetchFoodTrucks } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 
 const RootComponent = () => {
-  const { data: foodTrucksCount = 0 } = useQuery({
-    queryKey: ["foodTrucksCount"],
-    queryFn: fetchFoodTrucksCount,
+  const { data: foodTrucks = [] } = useQuery({
+    queryKey: ["foodTrucks"],
+    queryFn: fetchFoodTrucks,
   });
+  const foodTrucksCount = foodTrucks.length;
 
   return (
     <>
@@ -99,7 +100,6 @@ const RootComponent = () => {
           </main>
         </div>
       </div>
-      <Outlet />
       <TanStackRouterDevtools />
     </>
   );

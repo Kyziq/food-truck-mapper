@@ -9,14 +9,14 @@ const axiosInstance = axios.create({
   timeout: 10000, // 10 seconds timeout
 });
 
-// Fetch the number of food trucks
-export const fetchFoodTrucksCount = async (): Promise<number> => {
+// Fetch all food trucks
+export const fetchFoodTrucks = async (): Promise<any[]> => {
   try {
     const response = await axiosInstance.get("/foodtrucks");
     console.log("Fetched food trucks:", response.data);
-    return response.data.length;
+    return response.data;
   } catch (error) {
     console.error("Failed to fetch food trucks:", error);
-    return 0;
+    return [];
   }
 };
