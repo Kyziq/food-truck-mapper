@@ -9,10 +9,10 @@
 
   <h3 align="center">Food Truck Mapper</h3>
   <p align="center">
-    A way to find .........................
+    Discover Delicious Adventures on Wheels!
     <br />
-    <a href="https://github.com/Kyziq/food-truck-mapper">View Demo</a>
-    ·
+    <!-- <a href="https://github.com/Kyziq/food-truck-mapper">Explore the Demo</a> -->
+    <!-- · -->
     <a href="https://github.com/Kyziq/food-truck-mapper/issues">Report Bug</a>
     ·
     <a href="https://github.com/Kyziq/food-truck-mapper/issues">Request Feature</a>
@@ -27,7 +27,6 @@
       <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#built-with">Built With</a></li>
-        <li><a href="#motivation">Motivation</a></li>
       </ul>
     </li>
     <li>
@@ -45,27 +44,26 @@
 
 ## About the Project
 
-[![Food Truck Mapper Screenshot][product-screenshot]](https://example.com)
+<!-- [![Food Truck Mapper Screenshot][product-screenshot]](https://example.com) -->
 
-asdasdasasdas
+Food Truck Mapper is an innovative, full-stack solution developed as part of a university assignment, designed to revolutionize the way food enthusiasts discover and interact with local food trucks. The platform consists of:
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-### Motivation
-
-asdasdasasdas
+- A mobile app for users to locate food trucks, explore menus, and access real-time information.
+- An admin dashboard for system administrators to manage food truck data and maintain platform integrity.
+- A server providing RESTful APIs, connecting all components and handling core business logic.
+- A robust database system for secure data storage and real-time synchronization.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
 
-| Category        | Tech                                                                                                  |
-| --------------- | ----------------------------------------------------------------------------------------------------- |
-| Mobile          | [![React Native][ReactNative]][ReactNative-url] [![Expo][Expo]][Expo-url]                             |
-| Admin-Web       | [![Vite][Vite]][Vite-url] [![React][React]][React-url] [![TailwindCSS][TailwindCSS]][TailwindCSS-url] |
-| Server          | [![ElysiaJS][ElysiaJS]][ElysiaJS-url]                                                                 |
-| Database        | [![DrizzleORM][Drizzle]][Drizzle-url] [![PostgreSQL][PostgreSQL]][PostgreSQL-url]                     |
-| Package Manager | [![Bun][Bun]][Bun-url]                                                                                |
+| Category        | Tech                                                                              |
+| --------------- | --------------------------------------------------------------------------------- |
+| Mobile          | React Native, Expo                                                                |
+| Admin-Web       | Vite, React, TailwindCSS, ShadCN, TanStack Router, TanStack Query, TanStack Table |
+| Server          | ElysiaJS with Swagger                                                             |
+| Database        | DrizzleORM, PostgreSQL                                                            |
+| Package Manager | Bun                                                                               |
 
 Additionally, this project is managed with [Turborepo](https://turborepo.org/), which helps to run scripts and manage dependencies across multiple packages efficiently.
 
@@ -96,21 +94,26 @@ To get a local copy up and running, follow these steps:
    bun install
    ```
 4. Set up the environment:
-   Before proceeding, make sure to set up your environment variables. Copy the example environment file and rename it to `.env`.
+
+   Before proceeding, make sure to set up your environment variables. Copy the example environment file at root and rename it to `.env`.
+
    ```bash
    cp .env.example .env
    ```
-5. Edit the `.env` file and update the variables with to match your actual credentials..
+
+5. Edit the `.env` file and update the variables with to match your actual credentials.
    ```env
     DB_URL="postgres://your_username:your_password@0.0.0.0:5432/food_truck_mapper"
     GOOGLE_MAPS_API_KEY="your_google_maps_api_key_here"
-    REACT_APP_API_BASE_URL="http://your_api_base_url_here:your_server_port"
+    API_BASE_URL="http://your_api_base_url_here:your_server_port"
    ```
 6. Start the development environment:
+
+   This command will concurrently start the development servers for mobile app, admin dashboard, and server as defined in the Turborepo configuration.
+
    ```sh
    bun dev
    ```
-   This command will concurrently start the development servers for admin-web, mobile, and server as defined in the Turborepo configuration.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -143,8 +146,9 @@ root
 
 For detailed information on each application, please refer to their respective README files:
 
-- **Server**: [`/apps/server/README.md`](/apps/backend/README.md)
 - **Mobile**: [`/apps/mobile/README.md`](/apps/mobile/README.md)
+- **Admin Dashboard**: [`/apps/admin-web/README.md`](/apps/admin-web/README.md)
+- **Server**: [`/apps/server/README.md`](/apps/server/README.md)
 - **Database**: [`/packages/database/README.md`](/packages/database/README.md)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -158,9 +162,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[React]: https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB
+<!-- [React]: https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB
 [React-url]: https://react.dev/
 [ReactNative]: https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB
 [ReactNative-url]: https://reactnative.dev/
@@ -177,4 +180,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 [Vite]: https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white
 [Vite-url]: https://vitejs.dev/
 [TailwindCSS]: https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white
-[TailwindCSS-url]: https://tailwindcss.com/
+[TailwindCSS-url]: https://tailwindcss.com/ -->
