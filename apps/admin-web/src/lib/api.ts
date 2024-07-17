@@ -93,3 +93,17 @@ export const deleteMenuItem = async (menuItemId: number): Promise<void> => {
     throw error;
   }
 };
+
+// Update a menu item
+export const updateMenuItem = async (menuItem: any): Promise<void> => {
+  try {
+    const response = await axiosInstance.put(
+      `/menuitems/${menuItem.menuItemId}`,
+      menuItem
+    );
+    console.log("Updated menu item:", response.data);
+  } catch (error) {
+    console.error("Failed to update menu item:", error);
+    throw error;
+  }
+};
