@@ -12,10 +12,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "turbo run dev",
-    "build": "turbo run build",
-    "test": "turbo run test",
-    "lint": "turbo run lint"
+    "dev": "turbo run dev"
   },
   "engines": {
     "node": ">=18",

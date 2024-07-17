@@ -5,10 +5,8 @@
   "main": "expo-router/entry",
   "scripts": {
     "dev": "bun run expo start -c",
-    "build": "bun run expo export",
     "android": "bun run expo start --android",
     "ios": "bun run expo start --ios",
-    "lint": "eslint .",
     "eject": "bun run expo eject"
   },
   "dependencies": {
