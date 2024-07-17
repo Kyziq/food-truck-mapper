@@ -59,3 +59,26 @@ export const updateFoodTruck = async (foodTruck: any): Promise<void> => {
     throw error;
   }
 };
+
+// Fetch all menu items
+export const fetchMenuItems = async (): Promise<any[]> => {
+  try {
+    const response = await axiosInstance.get("/menuitems");
+    console.log("Fetched menu items:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch menu items:", error);
+    throw error;
+  }
+};
+
+// Create a new menu item
+export const createMenuItem = async (menuItem: any): Promise<void> => {
+  try {
+    const response = await axiosInstance.post("/menuitems", menuItem);
+    console.log("Created menu item:", response.data);
+  } catch (error) {
+    console.error("Failed to create menu item:", error);
+    throw error;
+  }
+};
