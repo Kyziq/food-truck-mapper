@@ -15,7 +15,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { LoadingSpinner } from "@/components/ui/loading";
-import { createMenuItem, fetchFoodTrucks, fetchMenuItems } from "@/lib/api";
+import {
+  createMenuItem,
+  deleteMenuItem,
+  fetchFoodTrucks,
+  fetchMenuItems,
+} from "@/lib/api";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import {
   Tooltip,
@@ -30,6 +35,7 @@ import {
   getCoreRowModel,
   getPaginationRowModel,
   flexRender,
+  ColumnDef,
 } from "@tanstack/react-table";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -44,6 +50,7 @@ import {
 import { useState } from "react";
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
+import { MenuItem } from "@types";
 
 export const Route = createLazyFileRoute("/menuitems")({
   component: MenuItems,
@@ -145,12 +152,39 @@ function FoodTruckCard({
     }
   };
 
+  const deleteMutation = useMutation({
+    mutationFn: deleteMenuItem,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["menuItems"] });
+    },
+  });
+
+  const handleDeleteMenuItem = async (menuItemId: number) => {
+    try {
+      await deleteMutation.mutateAsync(menuItemId);
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Menu item deleted successfully.",
+        duration: 3000,
+      });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "Failed to delete menu item.",
+        duration: 3000,
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+    }
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setNewMenuItem((prev) => ({ ...prev, [name]: value }));
   };
 
-  const columns = [
+  const columns: ColumnDef<MenuItem>[] = [
     {
       header: "Food Name",
       accessorKey: "name",
@@ -161,7 +195,7 @@ function FoodTruckCard({
     },
     {
       header: "Operation",
-      cell: () => (
+      cell: ({ row }) => (
         <div className="flex justify-end space-x-2">
           <TooltipProvider>
             <Tooltip>
@@ -178,7 +212,12 @@ function FoodTruckCard({
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <Button size="sm" variant="outline" className="text-red-600">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="text-red-600"
+                  onClick={() => handleDeleteMenuItem(row.original.menuItemId!)}
+                >
                   <Trash className="h-4 w-4" />
                 </Button>
               </TooltipTrigger>

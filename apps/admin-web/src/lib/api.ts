@@ -82,3 +82,14 @@ export const createMenuItem = async (menuItem: any): Promise<void> => {
     throw error;
   }
 };
+
+// Delete a menu item
+export const deleteMenuItem = async (menuItemId: number): Promise<void> => {
+  try {
+    const response = await axiosInstance.delete(`/menuitems/${menuItemId}`);
+    console.log("Deleted menu item:", response.data);
+  } catch (error) {
+    console.error("Failed to delete menu item:", error);
+    throw error;
+  }
+};
