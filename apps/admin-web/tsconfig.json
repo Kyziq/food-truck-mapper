@@ -17,6 +17,9 @@
             "@root-assets/*": [
                 "../../packages/assets/*"
             ],
+            "@types": [
+                "../../packages/types/index.ts"
+            ],
         }
     },
 }

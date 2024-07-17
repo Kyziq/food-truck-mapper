@@ -13,6 +13,7 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"),
       "@root-assets": path.resolve(__dirname, "../../packages/assets"),
+      "@types": path.resolve(__dirname, "../../packages/types/index.ts"),
     },
   },
   envPrefix: "API_BASE_URL",

@@ -33,9 +33,13 @@
             "@root-assets/*": [
                 "../../packages/assets/*"
             ],
+            "@types": [
+                "../../packages/types/index.ts"
+            ],
         }
     },
     "include": [
-        "src"
-    ],
+        "src/**/*",
+        "../../packages/types/**/*"
+    ]
 }
