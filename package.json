@@ -1,28 +1,40 @@
 {
   "name": "food-truck-mapper",
-  "version": "1.0.0",
-  "scripts": {
-    "dev": "turbo dev"
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kyziq/food-truck-mapper.git"
   },
-  "engines": {
-    "node": ">=18"
-  },
-  "packageManager": "bun@1.1.20",
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
-  "private": true,
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint"
+  },
+  "engines": {
+    "node": ">=18",
+    "bun": ">=1.0.0"
+  },
+  "packageManager": "bun@1.1.20",
   "dependencies": {
     "dotenv": "^16.4.5",
-    "drizzle-orm": "^0.32.0",
-    "pg": "^8.12.0"
+    "axios": "^1.7.2",
+    "react": "^18.3.1"
   },
   "devDependencies": {
-    "@types/pg": "^8.11.6",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
     "bun-types": "latest",
-    "drizzle-kit": "^0.23.0",
     "turbo": "^2.0.7",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "eslint": "^9.7.0",
+    "@typescript-eslint/eslint-plugin": "^7.16.1",
+    "@typescript-eslint/parser": "^7.16.1"
   }
 }
