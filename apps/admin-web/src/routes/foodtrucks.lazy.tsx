@@ -182,7 +182,7 @@ function FoodTrucks() {
   if (error) return <div>Error loading food trucks</div>;
 
   return (
-    <div className="p-4 md:p-8">
+    <div>
       <Card className="w-full h-full">
         <CardHeader className="flex flex-row items-center justify-between p-4 border-b">
           <div>
