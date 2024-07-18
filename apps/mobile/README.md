@@ -2,7 +2,7 @@
 
 ## Environment Configuration
 
-Edit the `.env` file and add your Google Maps API key, API base URL, and server port. You can find your local IPv4 address by running `ipconfig` on Windows or `ifconfig` on Mac/Linux:
+Edit the `.env` file and add your Google Maps API key, API base URL, and server port. Or you can use your local IPv4 address by running `ipconfig` on Windows or `ifconfig` on Mac/Linux:
 
 ```env
 GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
