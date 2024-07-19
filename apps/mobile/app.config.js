@@ -17,6 +17,8 @@ export default {
       backgroundColor: "#ffffff",
     },
     updates: {
+      enabled: true,
+      checkAutomatically: "ON_LOAD",
       fallbackToCacheTimeout: 0,
     },
     assetBundlePatterns: ["**/*"],
