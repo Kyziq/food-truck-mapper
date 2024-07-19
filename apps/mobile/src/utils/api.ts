@@ -11,6 +11,9 @@ const axiosInstance = axios.create({
   timeout: 10000, // 10 seconds timeout
 });
 
+// Utility function to introduce a delay
+// const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 // Fetch a list of food trucks
 export const fetchFoodTrucks = async (): Promise<FoodTruck[]> => {
   try {
