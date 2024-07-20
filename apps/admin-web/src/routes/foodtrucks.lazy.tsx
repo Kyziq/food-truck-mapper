@@ -382,24 +382,12 @@ function FoodTrucks() {
                     </>
                   ) : (
                     <>
-                      <TableCell className="py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">
-                          {truck.name}
-                        </div>
-                      </TableCell>
-                      <TableCell className="py-4 whitespace-nowrap">
-                        {truck.latitude}
-                      </TableCell>
-                      <TableCell className="py-4 whitespace-nowrap">
-                        {truck.longitude}
-                      </TableCell>
-                      <TableCell className="py-4 whitespace-nowrap">
-                        {truck.schedule}
-                      </TableCell>
-                      <TableCell className="py-4 whitespace-nowrap">
-                        {truck.operatorName}
-                      </TableCell>
-                      <TableCell className="py-4 whitespace-nowrap text-right">
+                      <TableCell>{truck.name}</TableCell>
+                      <TableCell>{truck.latitude}</TableCell>
+                      <TableCell>{truck.longitude}</TableCell>
+                      <TableCell>{truck.schedule}</TableCell>
+                      <TableCell>{truck.operatorName}</TableCell>
+                      <TableCell className="whitespace-nowrap text-right">
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger>
